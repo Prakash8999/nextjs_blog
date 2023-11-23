@@ -23,6 +23,9 @@ const SignIn = () => {
 			await signIn('google').then((res) => {
 				console.log(res);
 
+			}).then((res) => {
+				console.log(res);
+
 			})
 		} catch (error) {
 			console.log(error);
@@ -32,7 +35,7 @@ const SignIn = () => {
 
 	const loginwithgithub = async () => {
 
-		
+
 		setGithubLoading(true)
 		try {
 			await signIn('github').then((res) => {
