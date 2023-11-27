@@ -10,6 +10,10 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 			where: {
 				id: id
 			}
+			,
+			include:{
+				author:true
+			}
 		})
 
 		return NextResponse.json({message:"Single post fetched successfully" , post} , {status:200})
