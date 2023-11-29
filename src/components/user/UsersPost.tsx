@@ -21,7 +21,9 @@ const fetchData = async () => {
 const UsersPost = () => {
 	const { isLoading, isError, data,isSuccess } = useQuery({ queryKey: ['authenticateuserspost'], queryFn: fetchData, staleTime: 10000 })
 const router = useRouter()
-	if(isLoading ) {
+console.log(data);
+	
+if(isLoading ) {
 
 	return <h1>
 		Loading...

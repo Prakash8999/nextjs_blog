@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
 	try {
 		const body = await request.json()
 
-		const { title, content } = PostValidator.parse(body)
+		const { title, content, publish, draft } = PostValidator.parse(body)
 
 		const session = await getServerSession(authOptions)
 		if (!session) {
@@ -20,7 +20,9 @@ export async function POST(request: NextRequest) {
 			data: {
 				title,
 				content,
-				authorId: session?.user?.id
+				authorId: session?.user?.id,
+				publish,
+				draft,
 			}
 		})
 

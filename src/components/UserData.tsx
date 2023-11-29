@@ -27,7 +27,7 @@ const UserData = ({ user }: userData) => {
 	return (
 		<>
 
-			<div className="flex items-center justify-between cursor-pointer border px-4 py-1.5 rounded-md w-[20vw] " onClick={showMenu} >
+			<div className="flex items-center justify-between cursor-pointer border border-black px-4 py-1.5 rounded-md w-[20vw] " onClick={showMenu} >
 <div className='flex items-center gap-x-3'>
 
 				<UserAvatar user={user} />
@@ -51,9 +51,9 @@ const UserData = ({ user }: userData) => {
 						<p className="font-light text-sm">{user.email}</p>
 					</div>
 
-					<Link href={''}>Feed</Link>
-					<Link href={''}>Create Community</Link>
-					<Link href={''}>Setting</Link>
+					<Link href={'/'}>Feed</Link>
+					<Link href={'/create'}>Create Post</Link>
+					<Link href={''}>Profile</Link>
 
 					<div className="flex items-center justify-between pr-4">
 						<p>Dark Mode</p>

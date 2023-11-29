@@ -25,7 +25,7 @@ import { authOptions } from '../../lib/auth'
 
 type FormData = z.infer<typeof PostValidator>
 
-export const Create= () => {
+export const Create = () => {
   const {
     register,
     handleSubmit,
@@ -33,9 +33,12 @@ export const Create= () => {
   } = useForm<FormData>({
     resolver: zodResolver(PostValidator),
     defaultValues: {
-    
+
       title: '',
       content: null,
+      publish: true,
+      draft: false
+
     },
   })
   const ref = useRef<EditorJS>()
@@ -43,37 +46,79 @@ export const Create= () => {
   const router = useRouter()
   const [isMounted, setIsMounted] = useState<boolean>(false)
   const pathname = usePathname()
-
-  const { mutate: createPost , isPending} = useMutation({
+  const [isDraftLoading, setIsDraftLoading] = useState(false)
+  const { mutate: createPost, isPending } = useMutation({
     mutationFn: async ({
       title,
       content,
-    
+      publish,
+      draft
+
     }: PostCreationRequest) => {
-      const payload: PostCreationRequest = { title, content }
+      const payload: PostCreationRequest = { title, content, publish, draft }
       const { data } = await axios.post('/api/post/submit', payload)
       return data
     },
     onError: (err) => {
-    
+
       console.log(err);
-      
-      
+
+
 
     },
-    
+
     onSuccess: (res) => {
-    
-    console.log(res)
-  
-router.refresh()
+
+      console.log(res)
+
+      router.refresh()
 
       // location.reload()
       return toast.success('Post submitted successfully')
     },
 
-    
+
   })
+
+
+
+
+  const { mutate: createDraft } = useMutation({
+    mutationFn: async ({
+      title,
+      content,
+      publish,
+      draft
+
+    }: PostCreationRequest) => {
+      setIsDraftLoading(true)
+      const payload: PostCreationRequest = { title, content, publish, draft }
+      const { data } = await axios.post('/api/post/submit', payload)
+      return data
+    },
+    onError: (err) => {
+
+      console.log(err);
+setIsDraftLoading(false)
+
+
+    },
+
+    onSuccess: (res) => {
+
+      console.log(res)
+
+      router.refresh()
+
+      // location.reload()
+      setIsDraftLoading(false)
+      return toast.success('Post save as draft successfully')
+    },
+
+
+  })
+
+
 
   const initializeEditor = useCallback(async () => {
     const EditorJS = (await import('@editorjs/editorjs')).default
@@ -108,10 +153,10 @@ router.refresh()
             config: {
               uploader: {
                 async uploadByFile(file: File) {
-                  
-                
+
+
                   // const [res] = await uploadFiles([File], 'imageUploader')
-                  const [res] = await uploadFiles( [file], 'imageUploader')
+                  const [res] = await uploadFiles([file], 'imageUploader')
 
                   return {
                     success: 1,
@@ -143,7 +188,7 @@ router.refresh()
         //   variant: 'destructive',
         // })
         console.log(errors);
-        
+
         toast.error(errors?.title?.message)
       }
     }
@@ -180,10 +225,23 @@ router.refresh()
     const payload: PostCreationRequest = {
       title: data.title,
       content: blocks,
-    
+      publish: true,
+      draft: false
     }
 
     createPost(payload)
+  }
+  async function onDraft(data: FormData) {
+    const blocks = await ref.current?.save()
+
+    const payload: PostCreationRequest = {
+      title: data.title,
+      content: blocks,
+      publish: false,
+      draft: true
+    }
+
+    createDraft(payload)
   }
 
   if (!isMounted) {
@@ -196,11 +254,12 @@ router.refresh()
 
 
   return (
-    <div className='w-full flex justify-center gap-x-5 p-4 bg-slate-100 rounded-lg border border-zinc-200'>
+    <div className='w-full flex justify-center gap-x-5 p-4 bg-zinc-100	rounded-lg border border-zinc-200'>
       <form
         id='subreddit-post-form '
-        className='md:w-3/5 w-[95vw]  rounded-md p-4  bg-white text-black'
-        onSubmit={handleSubmit(onSubmit)}>
+        className='md:w-3/5 w-[95vw]  rounded-md p-4  bg-white text-black shadow-md'
+      // onSubmit={handleSubmit(onSubmit)}
+      >
         <div className='prose prose-stone dark:prose-invert'>
           <TextareaAutosize
             ref={(e) => {
@@ -222,21 +281,28 @@ router.refresh()
           </p>
         </div>
 
-<div className='flex justify-center '>
+        <div className='flex justify-center gap-x-9'>
 
-        <button disabled = {isPending} type='submit' className={`text-lg text-white  font-semibold  px-4 py-2 rounded-lg   ${isPending ? 'bg-blue-100' : 'bg-blue-500'} `}>{
- isPending ? 'Saving' : 'Post'       
-        
-}</button>
-</div>
+          <button disabled={isPending} type='button' onClick={handleSubmit(onSubmit)} className={`text-lg text-white  font-semibold  px-4 py-2 rounded-lg   ${isPending ? 'bg-blue-100' : 'bg-blue-500'} `}>{
+            isPending ? 'Publsihing' : 'Publish'
+
+          }</button>
+
+          <button type='button' disabled ={isDraftLoading} onClick={handleSubmit(onDraft)} className={`text-lg text-white  font-semibold  px-4 py-2 rounded-lg   ${isPending ? 'bg-gray-100' : 'bg-gray-400'} `}>{
+            isDraftLoading ? 'Saving' : 'Save as Draft' 
+            
+          }</button>
+        </div>
       </form>
 
-<div className='w-1/4 bg-white h-[50vh] rounded-lg p-5'>
-<h1 className='text-center text-xl pb-2'>Your recent posts</h1>
-  <UsersPost/>
-</div>
+      <div className='w-1/4 bg-white h-[50vh] rounded-lg p-5'>
+        {/* <h1 className='text-center text-xl pb-2'>Your recent posts</h1>
+        <UsersPost /> */}
 
-      <Toaster richColors position='top-center'/>
+        //Idk what to add here
+      </div>
+
+      <Toaster richColors position='top-center' />
     </div>
   )
 }

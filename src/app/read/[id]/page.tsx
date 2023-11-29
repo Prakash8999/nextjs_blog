@@ -4,9 +4,13 @@ import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { useParams } from 'next/navigation'
 import React from 'react'
+import moment from 'moment'
 
-
-import { format, formatISO9075 } from "date-fns";
+import { format, formatISO, formatISO9075 } from "date-fns";
+import App from '@/components/Menu'
+import Image from 'next/image'
+import Spinner from '@/components/Loading'
+import Skeleton from 'react-loading-skeleton'
 
 const page = () => {
 	const { id } = useParams()
@@ -15,29 +19,52 @@ const page = () => {
 		// console.log(post)
 		return data
 	}
-	const { data, isError, isLoading } = useQuery({ queryKey: ['singlepost'], queryFn: fetchData, staleTime: 0 })
+	const { data, isError, isLoading } = useQuery({ queryKey: ['singlepost'], queryFn: fetchData, staleTime: -4 })
 	console.log(data)
+	if (isLoading) {
+		return <div className='flex justify-center items-center'>
+
+			<Spinner />
+		</div>
+	}
 	return (
 		<>
+			{/* <App/> */}
 			<div className='flex justify-center items-center'>
 
 				<div className='w-[45vw] h-full py-10 '>
 					<p className='text-center text-4xl font-semibold'>
-					'	{data?.post?.title}'
- 					</p>
-					<div className='mt-8  text-center  '>
-						<div className='flex items-center justify-center gap-x-4 text-2xl'>
+						{/* {
 
-							By <p className=''>
-								{
-									data?.post?.author?.name?.toUpperCase()
-								}
-							</p>
+							isLoading ? < Skeleton count={5} baseColor='black'  height={100} width={100} className='mb-5 rounded-lg bg-black h-full w-full' /> : ''
+						} */}
+						{
+							data?.post?.title
+						}
+					</p>
+					<div className='mt-8    '>
+						<div className='flex items-center  gap-x-4 '>
+							<Image src={data?.post?.author?.image} alt='User Image' width={32} height={32} className='object-cover rounded-full' referrerPolicy='no-referrer' />
+							<div className='flex flex-col'>
+
+								<div className='flex gap-x-3 '>
+									{
+										data?.post?.author?.name?.toUpperCase()
+									}
+									<p className='text-green-400 cursor-pointer'>. Follow</p>
+								</div>
+								<p>
+
+									{moment(data?.post?.createdAt).startOf('day').fromNow()}
+								</p>
+
+							</div>
 						</div>
 
 						<p>
-							{/* {formatISO9075( new Date (data?.post?.createdAt))} */}
-							{data?.post?.createdAt}
+							{/* {format( new Date (data?.post?.createdAt).getTime(), 'dd MMM yyyy')} */}
+							{/* {data?.post?.createdAt} */}
+							{/* {moment(data?.post?.createdAt).startOf('day').fromNow()} */}
 						</p>
 					</div>
 

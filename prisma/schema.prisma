@@ -48,6 +48,9 @@ model User {
   accounts      Account[]
   sessions      Session[]
   Post          Post[]
+  Linkedin      String?
+  Github        String?
+  Website       String?
 
   @@unique([email, id])
 }
