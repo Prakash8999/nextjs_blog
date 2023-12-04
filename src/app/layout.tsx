@@ -28,7 +28,7 @@ export default function RootLayout({
 
         <NextAuthProvider>
 
-          <div>
+          <div className='relative'>
             <Navbar />
             <div className='mt-16'>
 

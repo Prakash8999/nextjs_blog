@@ -51,6 +51,8 @@ model User {
   Linkedin      String?
   Github        String?
   Website       String?
+  Vote          Vote[]
+  bio           String?   @default("this is my bio")
 
   @@unique([email, id])
 }
@@ -71,11 +73,21 @@ model Post {
   // author User    @relation(fields: [authorEmail, authorId], references: [email, id])
 
   // authorEmail
-  author   User   @relation(fields: [authorId], references: [id])
-  authorId String @db.ObjectId
+  author     User     @relation(fields: [authorId], references: [id])
+  authorId   String   @db.ObjectId
+  coverPhoto String?
+  summary    String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  publish    Boolean? @default(true)
+  draft      Boolean? @default(false)
+  Vote       Vote[]
+}
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  publish   Boolean? @default(true)
-  draft     Boolean? @default(false)
+model Vote {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @db.ObjectId
+  post   Post   @relation(fields: [postId], references: [id])
+  postId String @db.ObjectId
 }

@@ -5,10 +5,10 @@ import { User } from 'next-auth'
 import UserAvatar from './UserAvatar'
 import Link from 'next/link'
 import { signOut } from 'next-auth/react';
-import { IoIosArrowDown ,IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 interface userData {
-	user: Pick<User, 'name' | 'image' | 'email'>
+	user: Pick<User, 'name' | 'image' | 'email' >
 }
 
 
@@ -26,23 +26,30 @@ const UserData = ({ user }: userData) => {
 
 	return (
 		<>
-
-			<div className="flex items-center justify-between cursor-pointer border border-black px-4 py-1.5 rounded-md w-[20vw] " onClick={showMenu} >
-<div className='flex items-center gap-x-3'>
-
-				<UserAvatar user={user} />
-				<p className="font-semibold text-base">{user.name}</p>
-</div>
-{
-!show ? <IoIosArrowDown /> : <IoIosArrowUp />
+<div className='flex flex-col gap-y-5 relative'>
 
 
-}
+
+			<div className="flex items-center justify-between cursor-pointer border border-black px-2 py-1.5 rounded-md w-fit  " onClick={showMenu} >
+				<div className='flex items-center gap-x-3'>
+
+					<UserAvatar user={user} />
+					<p className="font-semibold text-base">{user.name}</p>
+				</div>
+
+				{
+					!show ? <IoIosArrowDown className='ml-2' /> : <IoIosArrowUp className='ml-2'/>
+
+
+				}
+
+
+				
 
 			</div>
 
 
-			<div className={`${show ? 'block absolute right-10 translate-y-4 top-16 shadow-md bg-[#19192B] text-white   rounded-md p-3 transition-transform' : 'hidden'}`}>
+			<div className={`${show ? 'absolute mt-16 shadow-md bg-[#19192B] text-white   rounded-md p-4 transition-transform' : 'hidden'}`}>
 				<div className="flex flex-col gap-y-4 pt-2">
 					<div>
 
@@ -53,7 +60,7 @@ const UserData = ({ user }: userData) => {
 
 					<Link href={'/'}>Feed</Link>
 					<Link href={'/create'}>Create Post</Link>
-					<Link href={''}>Profile</Link>
+					<Link href={'/profile'}>Profile</Link>
 
 					<div className="flex items-center justify-between pr-4">
 						<p>Dark Mode</p>
@@ -74,6 +81,7 @@ const UserData = ({ user }: userData) => {
 						});
 					}}>Signout</button>
 				</div>
+			</div>
 			</div>
 		</>
 	)

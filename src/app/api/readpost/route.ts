@@ -9,7 +9,14 @@ export async function GET(res: NextResponse) {
 		const post = await prisma.post.findMany({
 
 			select: {
-				author: true,
+				author: {
+					select:{
+						name:true,
+						username:true,
+						image:true,
+						id:true
+					}
+				},
 				content: true,
 				title: true,
 				createdAt: true,
@@ -26,7 +33,7 @@ export async function GET(res: NextResponse) {
 
 		return NextResponse.json({ message: "Post Fetch successfully", post }, { status: 200 })
 	} catch (error) {
-		return NextResponse.json({ message: error }, { status: 401 })
+		return NextResponse.json({ message: error }, { status: 400 })
 	}
 
 }

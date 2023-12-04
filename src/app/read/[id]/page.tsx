@@ -6,7 +6,7 @@ import { useParams } from 'next/navigation'
 import React from 'react'
 import moment from 'moment'
 
-import { format, formatISO, formatISO9075 } from "date-fns";
+
 import App from '@/components/Menu'
 import Image from 'next/image'
 import Spinner from '@/components/Loading'
@@ -20,7 +20,7 @@ const page = () => {
 		return data
 	}
 	const { data, isError, isLoading } = useQuery({ queryKey: ['singlepost'], queryFn: fetchData, staleTime: -4 })
-	console.log(data)
+	// console.log(data)
 	if (isLoading) {
 		return <div className='flex justify-center items-center'>
 
