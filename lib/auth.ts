@@ -12,9 +12,9 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
   },
-//   pages: {
-//     signIn: '/sign-in',
-//   },
+  //   pages: {
+  //     signIn: '/sign-in',
+  //   },
   providers: [
     GitHubProvider({
       clientId: process.env.GITHUB_ID!,
@@ -24,7 +24,7 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     })
-  
+
   ],
   callbacks: {
     async session({ token, session }) {
@@ -35,6 +35,10 @@ export const authOptions: NextAuthOptions = {
         session.user.image = token.picture
         session.user.username = token.username
         session.user.bio = token.bio
+        session.user.github = token.github
+        session.user.linkedin = token.linkedin
+        session.user.coding_skills = token.coding_skills
+        session.user.website = token.website
       }
 
       return session
@@ -69,8 +73,11 @@ export const authOptions: NextAuthOptions = {
         email: dbUser.email,
         picture: dbUser.image,
         username: dbUser.username,
-        bio:dbUser.bio,
-
+        bio: dbUser.bio,
+        github: dbUser.github,
+        linkedin: dbUser.linkedin,
+        coding_skills: dbUser.coding_skills,
+        website: dbUser.website
       }
     },
     redirect() {

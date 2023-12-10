@@ -48,11 +48,13 @@ model User {
   accounts      Account[]
   sessions      Session[]
   Post          Post[]
-  Linkedin      String?
-  Github        String?
-  Website       String?
+
+  linkedin      String?
+  github        String?
+  coding_skills String?
+  website       String?
   Vote          Vote[]
-  bio           String?   @default("this is my bio")
+  bio           String? @default("")
 
   @@unique([email, id])
 }

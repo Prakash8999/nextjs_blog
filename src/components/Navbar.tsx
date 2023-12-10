@@ -20,7 +20,7 @@ const Navbar =async () => {
 
   const session =await getServerSession(authOptions)
 
-console.log(session);
+// console.log(session);
 
 
   return (
