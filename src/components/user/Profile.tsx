@@ -177,7 +177,7 @@ const Profile = ({ session }: user) => {
 						<div className='flex flex-col gap-y-2'>
 
 							<label htmlFor="user">Bio</label>
-							<textarea value={bio} disabled={!isEditable} onChange={(e) => {
+							<textarea value={bio} disabled={!isEditable} maxLength={300} onChange={(e) => {
 								setBio(e.target.value)
 							}} className='h-11 outline-none border pl-2 rounded-lg' placeholder='Write about Yourself' />
 						</div>
