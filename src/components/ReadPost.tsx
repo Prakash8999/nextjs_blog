@@ -58,7 +58,7 @@ const ReadPost = ({ className }: cn) => {
 									</div>
 								</Link>
 
-								<div className='absolute bottom-0 left-0 h-16 w-full bg-gradient-to-t from-white to-transparent'></div>
+								{/* <div className='absolute bottom-0 left-0 h-16 w-full bg-gradient-to-t from-white to-transparent'></div> */}
 							</div>
 
 						})

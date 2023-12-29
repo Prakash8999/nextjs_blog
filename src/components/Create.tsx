@@ -99,7 +99,7 @@ export const Create = () => {
     onError: (err) => {
 
       console.log(err);
-setIsDraftLoading(false)
+      setIsDraftLoading(false)
 
 
     },
@@ -261,6 +261,15 @@ setIsDraftLoading(false)
       // onSubmit={handleSubmit(onSubmit)}
       >
         <div className='prose prose-stone dark:prose-invert'>
+          <div className='flex  gap-x-3 pb-4'>
+          <p>
+            Cover Photo
+          </p>
+          <input type="file" accept="image/png, image/jpeg" />
+
+          </div>
+
+
           <TextareaAutosize
             ref={(e) => {
               titleRef(e)
@@ -288,9 +297,9 @@ setIsDraftLoading(false)
 
           }</button>
 
-          <button type='button' disabled ={isDraftLoading} onClick={handleSubmit(onDraft)} className={`text-lg text-white  font-semibold  px-4 py-2 rounded-lg   ${isPending ? 'bg-gray-100' : 'bg-gray-400'} `}>{
-            isDraftLoading ? 'Saving' : 'Save as Draft' 
-            
+          <button type='button' disabled={isDraftLoading} onClick={handleSubmit(onDraft)} className={`text-lg text-white  font-semibold  px-4 py-2 rounded-lg   ${isPending ? 'bg-gray-100' : 'bg-gray-400'} `}>{
+            isDraftLoading ? 'Saving' : 'Save as Draft'
+
           }</button>
         </div>
       </form>

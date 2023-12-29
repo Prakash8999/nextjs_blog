@@ -9,6 +9,7 @@ import Image from 'next/image'
 import { BsGithub, BsLinkedin } from 'react-icons/bs'
 import { RiArticleLine, RiUserFollowLine } from 'react-icons/ri'
 import { AiOutlineLike } from 'react-icons/ai'
+import { GrLocation } from 'react-icons/gr'
 
 
 
@@ -23,8 +24,32 @@ const page = () => {
 		return data
 	}
 
+
+
 	const { data: userData, isError, isLoading } = useQuery({ queryKey: ['userpublicdata'], queryFn: fetchUserPublicData, staleTime: 0 })
 	console.log(userData);
+
+
+
+	const handleFollow = () => {
+		console.log(userData?.user?.id);
+
+		try {
+			axios('/api/follow', {
+				method:"POST",
+				data: {
+					followerId: String(userData?.user?.id)
+				}
+			}).then((res) => {
+				console.log(res);
+
+			})
+		} catch (error) {
+			console.log(error);
+
+		}
+
+	}
 	if (isLoading) {
 		return <h1>
 			Loading.......
@@ -68,18 +93,27 @@ const page = () => {
 
 							<p>Likes: {userData?.user?.Post.length}</p>
 						</div>
+
+						<div className='flex gap-x-2 text-sm items-center pl-4 '>
+							<GrLocation />
+
+							<p>Location: Somewhere on Earth</p>
+						</div>
 						<div className='flex gap-x-2 text-sm items-center pl-4 '>
 							<RiUserFollowLine />
 
 							<p>Followers: {userData?.user?.Post.length}</p>
 						</div>
-						<div className='flex gap-x-2 text-sm items-center pl-4 '>
-							<AiOutlineLike />
 
-							<p>Likes: {userData?.user?.Post.length}</p>
-						</div>
 					</div>
 
+					<div className='mt-6'>
+
+
+						<button onClick={handleFollow} className='bg-blue-500 px-4 py-2 text-white rounded-md text-xl'>
+							Follow
+						</button>
+					</div>
 
 				</div>
 

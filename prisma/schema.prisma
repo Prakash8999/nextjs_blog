@@ -39,24 +39,43 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
-  email         String?   @unique
+  email         String?     @unique
   emailVerified DateTime?
   image         String?
   username      String?
   accounts      Account[]
   sessions      Session[]
   Post          Post[]
-
   linkedin      String?
   github        String?
   coding_skills String?
   website       String?
   Vote          Vote[]
-  bio           String? @default("")
+  bio           String?     @default("")
+  Followers     Followers[]
+  Following     Following[]
 
   @@unique([email, id])
+}
+
+model Followers {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  follower   User?   @relation(fields: [followerID], references: [id])
+  followerID String? @db.ObjectId
+
+  @@index([followerID], name: "followers_userId_index")
+}
+
+model Following {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  following   User?   @relation(fields: [followingId], references: [id])
+  followingId String? @db.ObjectId
+
+  @@index([followingId], name: "following_userId_index")
 }
 
 model VerificationToken {
