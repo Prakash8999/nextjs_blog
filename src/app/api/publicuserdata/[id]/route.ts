@@ -4,7 +4,7 @@ import prisma from "../../../../../lib/prismadb"
 export async function GET(req:NextRequest,{ params }: { params: { id: string } }) {
 	try {
 		const  {id}  = params
-		const user = await prisma.user.findFirst({
+		const author = await prisma.user.findFirst({
 			where:{
 				username:id
 			},
@@ -19,7 +19,7 @@ export async function GET(req:NextRequest,{ params }: { params: { id: string } }
 				Post:true
 			}
 		})
-		return NextResponse.json({ message: "userfeeetched" , user} )
+		return NextResponse.json({ message: "userfeeetched" , author} )
 	} catch (error) {
 		return NextResponse.json(error)
 

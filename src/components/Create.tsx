@@ -22,10 +22,14 @@ import { PostValidator, PostCreationRequest } from '../../validators/post'
 import UsersPost from './user/UsersPost'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../../lib/auth'
+import Spinner from './Loading'
 
 type FormData = z.infer<typeof PostValidator>
 
 export const Create = () => {
+
+  const [cover, setCoverPhoto] = useState<string >('');
+  const [coverLoading, setCoverLoading] = useState<boolean>(false)
   const {
     register,
     handleSubmit,
@@ -37,12 +41,14 @@ export const Create = () => {
       title: '',
       content: null,
       publish: true,
-      draft: false
+      draft: false,
+      coverPhoto: '',
 
     },
   })
   const ref = useRef<EditorJS>()
   const _titleRef = useRef<HTMLTextAreaElement>(null)
+  const _coverRef = useRef<HTMLImageElement>(null)
   const router = useRouter()
   const [isMounted, setIsMounted] = useState<boolean>(false)
   const pathname = usePathname()
@@ -52,10 +58,11 @@ export const Create = () => {
       title,
       content,
       publish,
-      draft
+      draft,
+      coverPhoto
 
     }: PostCreationRequest) => {
-      const payload: PostCreationRequest = { title, content, publish, draft }
+      const payload: PostCreationRequest = { title, content, publish, draft, coverPhoto }
       const { data } = await axios.post('/api/post/submit', payload)
       return data
     },
@@ -88,11 +95,11 @@ export const Create = () => {
       title,
       content,
       publish,
-      draft
-
+      draft,
+      coverPhoto
     }: PostCreationRequest) => {
       setIsDraftLoading(true)
-      const payload: PostCreationRequest = { title, content, publish, draft }
+      const payload: PostCreationRequest = { title, content, publish, draft, coverPhoto }
       const { data } = await axios.post('/api/post/submit', payload)
       return data
     },
@@ -226,7 +233,8 @@ export const Create = () => {
       title: data.title,
       content: blocks,
       publish: true,
-      draft: false
+      draft: false,
+      coverPhoto: cover
     }
 
     createPost(payload)
@@ -238,7 +246,8 @@ export const Create = () => {
       title: data.title,
       content: blocks,
       publish: false,
-      draft: true
+      draft: true,
+      coverPhoto: cover,
     }
 
     createDraft(payload)
@@ -249,9 +258,21 @@ export const Create = () => {
   }
 
   const { ref: titleRef, ...rest } = register('title')
+  const { ref: coverRef, ...restCover } = register('coverPhoto')
 
 
-
+  const uploadCoverPhoto = async (file: File) => {
+    setCoverLoading(true)
+    try {
+      const [res] = await uploadFiles([file], 'imageUploader')
+      console.log(res);
+      setCoverLoading(false)
+      // Update cover photo state
+      setCoverPhoto(res.fileUrl);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className='w-full flex justify-center gap-x-5 p-4 bg-zinc-100	rounded-lg border border-zinc-200'>
@@ -261,13 +282,49 @@ export const Create = () => {
       // onSubmit={handleSubmit(onSubmit)}
       >
         <div className='prose prose-stone dark:prose-invert'>
-          <div className='flex  gap-x-3 pb-4'>
-          <p>
-            Cover Photo
-          </p>
-          <input type="file" accept="image/png, image/jpeg" />
+          {/* <div className='flex  gap-x-3 pb-4'>
+            <p>
+              Cover Photo
+            </p>
+
+            <input type="image" accept="image/png, image/jpeg"  ref={(e) => {
+              coverRef(e)
+              // @ts-ignore
+              _coverRef.current = e
+
+            }} 
+            {...restCover}
+            />
+
+            <button >Upload</button>
+          </div> */}
+
+
+          <div className='flex gap-x-4 pb-3 flex-row '>
+            <p>Cover Photo:</p>
+            <input
+              type='file'
+              accept='image/png, image/jpeg'
+              
+              onChange={(e) => uploadCoverPhoto(e.target.files![0])}
+            />
+<div>
+
+             {
+              coverLoading ? <Spinner className='w-8 h-8 ml-8' /> : ''
+            } 
+        
+            </div>
 
           </div>
+
+          {cover && (
+            <div className='pb-3'>
+              <p className='text-sm'>Selected Cover Photo:</p>
+              <img src={cover} alt='Cover' className='h-[52vh] border border-gray-300 p-1 object-cover w-[70vh] ' />
+            </div>
+          )}
+
 
 
           <TextareaAutosize
@@ -278,7 +335,7 @@ export const Create = () => {
             }}
             {...rest}
             placeholder='Title'
-            className='w-full h-12 resize-none py-2 pl-1 appearance-none overflow-hidden bg-transparent text-xl font-bold border outline-none outline focus:border-black placeholder:font-normal rounded-md'
+            className='w-full h-12 resize-none py-2 pl-1 appearance-none overflow-hidden bg-transparent text-xl font-semibold border outline-none outline focus:border-black placeholder:font-normal rounded-md'
           />
           <div id='editor' className='min-h-[500px] w-full border  focus:border-black border-gray-500 ' />
           <p className='text-sm text-gray-500'>

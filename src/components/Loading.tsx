@@ -1,12 +1,12 @@
 import React from "react";
 
-const Spinner = () => {
+const Spinner = ({className} : {className:string}) => {
   return (
-	<div className="w-full h-full flex justify-center items-center pt-14">
+	<div className="w-full h-full flex justify-center items-center ">
 
     <svg
       aria-hidden="true"
-      className="w-20 h-20 text-gray-200 animate-spin fill-blue-600"
+      className={`${className} text-gray-200 animate-spin fill-blue-600 `}
       viewBox="0 0 100 101"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

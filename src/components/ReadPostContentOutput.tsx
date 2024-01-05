@@ -21,16 +21,20 @@ interface EditorOutputProps {
 const renderers = {
   image: CustomImageRenderer,
   code: CustomCodeRenderer,
+
 }
 
 const style = {
   paragraph: {
     fontSize: '1.2rem',
     lineHeight: '1.8rem',
-    fontFamily: 'poopins'
+    fontFamily: 'poopins',
+    paddingBottom: '8px',
 
-    
+
   },
+
+
 }
 
 const EditorOutput: FC<EditorOutputProps> = ({ content }) => {
@@ -39,7 +43,7 @@ const EditorOutput: FC<EditorOutputProps> = ({ content }) => {
     <Output
       style={style}
       className={` `}
-      
+
       renderers={renderers}
       data={content}
     />
