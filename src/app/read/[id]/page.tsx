@@ -40,11 +40,14 @@ const page = () => {
 
 
 				<div className='w-[55vw] min-h-screen h-full shadow-lg   bg-white  rounded-lg '>
+					{
+						data?.post?.coverPhoto ? <div>
 
-					<div>
-						<Image alt='cover photo' src={data?.post?.coverPhoto } width={1000} height={900} className=' h-[50vh] object-cover rounded-lg shadow-lg' priority />
+							<Image alt='cover photo' src={data?.post?.coverPhoto} width={1000} height={900} className=' h-[50vh] object-cover rounded-lg shadow-lg' priority />
 
-					</div>
+						</div> : ''
+					}
+
 					<div className='px-6'>
 
 						<div className='mt-6    '>
@@ -73,9 +76,9 @@ const page = () => {
 												// dayjs(data?.post?.createdAt, 'YYYY-MM-DD').toDate()
 												
 											} */
-											
-											// @ts-ignore
-											// dayjs(data?.post?.createdAt).format('DD/MM/YYYY')
+
+												// @ts-ignore
+												// dayjs(data?.post?.createdAt).format('DD/MM/YYYY')
 											}
 
 											{
@@ -83,10 +86,10 @@ const page = () => {
 
 												dayjs(data?.post?.createdAt).toNow()
 
-												
-												
+
+
 												// dayjs().to(dayjs(data?.post?.createdAt)) // "31 years ago"
-												
+
 
 
 											}

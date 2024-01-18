@@ -11,7 +11,12 @@ import { RiArticleLine, RiUserFollowLine } from 'react-icons/ri'
 import { AiOutlineLike } from 'react-icons/ai'
 import { GrLocation } from 'react-icons/gr'
 import PublicUsersProfile from '@/components/PublicUsersProfile'
-
+import { FaRegComments } from 'react-icons/fa'
+import { IoSaveOutline } from 'react-icons/io5'
+import Link from 'next/link'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import * as dayjs from 'dayjs'
 
 
 const page = () => {
@@ -58,9 +63,9 @@ const page = () => {
 	}
 	return (
 		<>
-			<div className='bg-gray-100 w-full min-h-screen h-full flex  justify-between pt-9 pl-12 '>
+			<div className='bg-gray-100 w-full min-h-screen h-full flex  justify-start gap-x-10 pt-9 pl-12 '>
 
-				<div className='w-1/4 bg-white h-[80vh] flex flex-col items-center pt-3 fixed rounded-lg shadow-lg'>
+				<div className='w-1/4 bg-white h-[80vh] flex flex-col items-center pt-3  rounded-lg shadow-lg'>
 
 					<Image title={userData?.author?.username} src={userData?.author?.image} alt='User Image' width={100} height={100} className='object-cover rounded-full' referrerPolicy='no-referrer' />
 					<p className='text-2xl font-semibold text-center mt-3'>{userData?.author?.name}</p>
@@ -120,6 +125,102 @@ const page = () => {
 				</div>
 
 
+				<div className='w-2/4 '>
+
+					{
+						isLoading ? < Skeleton count={5} baseColor='white' height={100} className='mb-5 rounded-lg' /> :
+							userData?.author?.Post?.map((post: any, index: number) => {
+								return <div key={index} className={` relative bg-white flex  flex-col h-fit overflow-hidden   mb-4 p-4 rounded-xl shadow`}>
+									<div className='flex gap-x-3 w-fit'>
+										<Image src={userData?.author?.image} alt='User Image' width={36} height={36} className='object-cover rounded-full' referrerPolicy='no-referrer' />
+										<div className='flex flex-col -space-y-1'>
+
+											<p className='text-sm text-black font-semibold '> {userData.author?.username}
+
+											</p>
+											<p className='text-sm'>
+
+												{
+													// @ts-ignore
+													dayjs(post?.createdAt).format('DD/MM/YY')
+												}
+											</p>
+										</div>
+
+									</div>
+
+									<div>
+										{!post?.coverPhoto ?
+											<div className='mt-4'>
+
+												<Link className='' href={`/read/${post?.id}`}>
+													<h2 className='font-semibold text-xl '>{post?.title}</h2>
+
+												</Link>
+
+
+												<div className='flex justify-between pt-2 '>
+													<div className='flex   gap-x-10'>
+
+														<button >
+															<AiOutlineLike className='text-2xl' />
+														</button>
+
+
+														<button>
+															<FaRegComments className='text-2xl' />
+														</button>
+													</div>
+
+
+													<button title='save'>
+														<IoSaveOutline className='text-2xl' />
+													</button>
+												</div>
+											</div>
+
+											: <div className='mt-4'>
+
+												<Link className='' href={`/read/${post?.id}`}>
+
+													<Image alt='cover photo' src={post?.coverPhoto} width={1000} height={600} className=' h-[50vh] object-cover rounded-lg shadow-lg' priority />
+													<h2 className='font-semibold text-xl mt-2'>{post?.title}</h2>
+												</Link>
+
+												<div className='flex justify-between pt-2 '>
+													<div className='flex   gap-x-10'>
+
+														<button >
+															<AiOutlineLike className='text-2xl' />
+														</button>
+
+
+														<button >
+															<FaRegComments className='text-2xl' />
+														</button>
+													</div>
+
+
+													<button title='save'>
+														<IoSaveOutline className='text-2xl' />
+													</button>
+												</div>
+											</div>}
+
+
+									</div>
+
+
+									{/* <div className='absolute bottom-0 left-0 h-16 w-full bg-gradient-to-t from-white to-transparent'></div> */}
+								</div>
+
+							})
+
+					}
+
+
+
+				</div>
 			</div>
 		</>
 	)

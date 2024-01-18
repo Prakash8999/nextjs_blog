@@ -28,7 +28,7 @@ type FormData = z.infer<typeof PostValidator>
 
 export const Create = () => {
 
-  const [cover, setCoverPhoto] = useState<string >('');
+  const [cover, setCoverPhoto] = useState<string>('');
   const [coverLoading, setCoverLoading] = useState<boolean>(false)
   const {
     register,
@@ -305,15 +305,17 @@ export const Create = () => {
             <input
               type='file'
               accept='image/png, image/jpeg'
-              
+              className=''
+              placeholder='Choose Cover Photo'
+
               onChange={(e) => uploadCoverPhoto(e.target.files![0])}
             />
-<div>
+            <div>
 
-             {
-              coverLoading ? <Spinner className='w-8 h-8 ml-8' /> : ''
-            } 
-        
+              {
+                coverLoading ? <Spinner className='w-8 h-8 ml-8' /> : ''
+              }
+
             </div>
 
           </div>

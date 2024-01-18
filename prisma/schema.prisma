@@ -62,8 +62,7 @@ model User {
 }
 
 model Followers {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
   follower   User?   @relation(fields: [followerID], references: [id])
   followerID String? @db.ObjectId
 
