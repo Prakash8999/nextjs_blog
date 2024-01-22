@@ -20,7 +20,7 @@ const page = () => {
 	const { data, isError, isLoading } = useQuery({ queryKey: ['singlepost'], queryFn: fetchData, staleTime: -4 })
 	// console.log(data)
 	// if (isLoading) {
-	// 	return <div className='flex justify-center items-center bg-gray-100 h-screen'>
+	// 	return <div className='flex justify-center items-c enter bg-gray-100 h-screen'>
 
 	// 		<Spinner />
 	// 	</div>
@@ -66,7 +66,7 @@ const page = () => {
 
 
 										<p className='text-sm '>
-											Posted on
+											Posted
 										</p>
 										<p>
 
@@ -84,14 +84,11 @@ const page = () => {
 											{
 												// @ts-ignore
 
-												dayjs(data?.post?.createdAt).toNow()
+												dayjs(data?.post?.createdAt).toNow() 
 
 
 
 												// dayjs().to(dayjs(data?.post?.createdAt)) // "31 years ago"
-
-
-
 											}
 										</p>
 									</div>
@@ -114,6 +111,9 @@ const page = () => {
 								data?.post?.title?.charAt(0).toUpperCase() + data?.post?.title.slice(1)
 							}
 						</p>
+
+
+
 
 
 						<div className='mt-4 pb-8'>

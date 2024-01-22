@@ -11,7 +11,8 @@ export const PostValidator = z.object({
   content: z.any(),
   publish: z.boolean(),
   draft: z.boolean(),
-  coverPhoto: z.string()
+  coverPhoto: z.string(),
+  tags: z.string()
 })
 
 export type PostCreationRequest = z.infer<typeof PostValidator>

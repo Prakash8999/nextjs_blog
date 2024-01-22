@@ -103,6 +103,7 @@ model Post {
   publish    Boolean? @default(true)
   draft      Boolean? @default(false)
   Vote       Vote[]
+  tags       String?
 }
 
 model Vote {

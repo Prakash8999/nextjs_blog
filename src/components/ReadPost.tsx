@@ -28,7 +28,7 @@ const ReadPost = ({ className }: cn) => {
 
 	const { isLoading, error, data } = useQuery({ queryKey: ["posdata"], queryFn: fetchPost, staleTime: 10000 })
 
-console.log(data);
+	console.log(data);
 
 
 	// const {isLoading,isError,data} = useQuery({queryKey:"postdata", queryFn:fetchPost,  staleTime:10000})
@@ -73,12 +73,15 @@ console.log(data);
 
 											</Link>
 
+											<div className='py-2'>
 
+												{post?.tags?.split(",").map((val: any) => "#" + val + " , ")}
+											</div>
 											<div className='flex justify-between pt-2 '>
 												<div className='flex   gap-x-10'>
 
 													<button >
-														<AiOutlineLike className='text-2xl'/>
+														<AiOutlineLike className='text-2xl' />
 													</button>
 
 
@@ -106,7 +109,7 @@ console.log(data);
 												<div className='flex   gap-x-10'>
 
 													<button >
-														<AiOutlineLike className='text-2xl'/>
+														<AiOutlineLike className='text-2xl' />
 													</button>
 
 

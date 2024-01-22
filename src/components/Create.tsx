@@ -30,6 +30,7 @@ export const Create = () => {
 
   const [cover, setCoverPhoto] = useState<string>('');
   const [coverLoading, setCoverLoading] = useState<boolean>(false)
+  const [tags, setTags] = useState<string>('')
   const {
     register,
     handleSubmit,
@@ -43,6 +44,7 @@ export const Create = () => {
       publish: true,
       draft: false,
       coverPhoto: '',
+      tags: tags
 
     },
   })
@@ -59,10 +61,11 @@ export const Create = () => {
       content,
       publish,
       draft,
-      coverPhoto
+      coverPhoto,
+      tags
 
     }: PostCreationRequest) => {
-      const payload: PostCreationRequest = { title, content, publish, draft, coverPhoto }
+      const payload: PostCreationRequest = { title, content, publish, draft, coverPhoto, tags}
       const { data } = await axios.post('/api/post/submit', payload)
       return data
     },
@@ -96,10 +99,11 @@ export const Create = () => {
       content,
       publish,
       draft,
-      coverPhoto
+      coverPhoto,
+      tags,
     }: PostCreationRequest) => {
       setIsDraftLoading(true)
-      const payload: PostCreationRequest = { title, content, publish, draft, coverPhoto }
+      const payload: PostCreationRequest = { title, content, publish, draft, coverPhoto, tags }
       const { data } = await axios.post('/api/post/submit', payload)
       return data
     },
@@ -234,7 +238,9 @@ export const Create = () => {
       content: blocks,
       publish: true,
       draft: false,
-      coverPhoto: cover
+      coverPhoto: cover,
+      tags: tags
+
     }
 
     createPost(payload)
@@ -248,6 +254,7 @@ export const Create = () => {
       publish: false,
       draft: true,
       coverPhoto: cover,
+      tags:tags
     }
 
     createDraft(payload)
@@ -339,7 +346,21 @@ export const Create = () => {
             placeholder='Title'
             className='w-full h-12 resize-none py-2 pl-1 appearance-none overflow-hidden bg-transparent text-xl font-semibold border outline-none outline focus:border-black placeholder:font-normal rounded-md'
           />
-          <div id='editor' className='min-h-[500px] w-full border  focus:border-black border-gray-500 ' />
+
+
+          <div className=' py-2 shadow-sm'>
+            <input type="text"
+              onChange={(e) => {
+                setTags(e.target.value)
+              }}
+
+              placeholder='Add some tags..' className=' outline-none w-full h-12' />
+          </div>
+
+
+
+
+          <div id='editor' className='min-h-[500px] w-full border rounded-md focus:border-black border-gray-500 ' />
           <p className='text-sm text-gray-500'>
             Use{' '}
             <kbd className='rounded-md border bg-muted px-1 text-xs uppercase'>

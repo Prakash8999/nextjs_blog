@@ -74,7 +74,8 @@ export async function GET(res: NextResponse) {
 				id: true,
 				draft: true,
 				publish: true,
-				coverPhoto: true
+				coverPhoto: true,
+				tags: true
 			}
 			,
 			orderBy: {
