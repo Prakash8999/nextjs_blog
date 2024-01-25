@@ -1,24 +1,28 @@
 'use client'
+import { useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 
 const ChangeablePlaceholderSearchBar = () => {
   const [placeholder, setPlaceholder] = useState('Search on redlone');
-
-  // Function to toggle the placeholder
+  const [query, setQuery] = useState("")
+  const router = useRouter();
   const togglePlaceholder = () => {
     setPlaceholder((prevPlaceholder) =>
       prevPlaceholder === 'Search on Redlone' ? 'Search User or Title' : 'Search on Redlone'
     );
   };
-
-  // Use useEffect to update the placeholder every 5 seconds (5000 milliseconds)
   useEffect(() => {
     const intervalId = setInterval(togglePlaceholder, 3000);
-
-    // Cleanup function to clear the interval when the component unmounts
     return () => clearInterval(intervalId);
-  }, []); // Empty dependency array ensures that the effect runs only once
+  }, []);
 
+  const onSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    const encodedQuery = encodeURI(query)
+router.push(`/search?q=${encodedQuery}`)
+    console.log(encodedQuery);
+
+  }
   return (
     <div className="relative w-[50vw]">
       <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -38,17 +42,24 @@ const ChangeablePlaceholderSearchBar = () => {
           />
         </svg>
       </div>
-      <input
-        type="search"
-        id="default-search"
-        className="block w-full p-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-3xl bg-gray-50 focus:ring-blue-500 outline-none"
-        placeholder={placeholder}
-        style={{
-          transition: 'placeholder 1s ease', // Add a transition for the placeholder property
-          WebkitTransition: 'placeholder 0.5s ease', // For older versions of Safari
-        }}
-        required
-      />
+      <form action="" onSubmit={onSearch}>
+
+        <input
+          type="search"
+          id="default-search"
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value)
+          }}
+          className="block w-full p-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-3xl bg-gray-50 focus:ring-blue-500 outline-none"
+          placeholder={placeholder}
+          style={{
+            transition: 'placeholder 1s ease', // Add a transition for the placeholder property
+            WebkitTransition: 'placeholder 0.5s ease', // For older versions of Safari
+          }}
+          required
+        />
+      </form>
     </div>
   );
 };
