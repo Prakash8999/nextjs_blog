@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAuthSession } from "../../../lib/auth";
+import { getAuthSession } from "@/lib/auth";
 import { UsernameValidator } from "../../../../validators/username";
-import prisma from "../../../lib/prismadb";
+import prisma from "@/lib/prismadb";
 
 export async function PATCH(req: NextRequest) {
 
