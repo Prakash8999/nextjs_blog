@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { PostValidator } from "../../../../../validators/post";
 import { getServerSession } from "next-auth";
 
-import prisma from "../../../../lib/prismadb";
-import { authOptions } from "../../../../lib/auth";
+import prisma from "@/lib/prismadb";
+import { authOptions } from "@/lib/auth";
 
 export async function POST(request: NextRequest) {
 	try {

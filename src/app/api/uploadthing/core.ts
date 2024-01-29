@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth'
 // import { getToken } from 'auth/jwt'
 import { createUploadthing, type FileRouter } from 'uploadthing/next'
-import { authOptions } from '../auth/[...nextauth]/route'
+import { authOptions } from '@/lib/auth'
 
 const f = createUploadthing()
 
