@@ -382,10 +382,7 @@ export const Create = () => {
       </form>
 
       <div className='w-1/4 bg-white h-[50vh] rounded-lg p-5'>
-        {/* <h1 className='text-center text-xl pb-2'>Your recent posts</h1>
-        <UsersPost /> */}
-
-        //Idk what to add here
+         Idk what to add here
       </div>
 
       <Toaster richColors position='top-center' />

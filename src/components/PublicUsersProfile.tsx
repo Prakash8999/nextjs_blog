@@ -36,7 +36,7 @@ const PublicUsersProfile = ({ userData , className}: { userData: any, className:
 				<p className='text-2xl font-semibold text-center mt-3'>{userData?.author?.name}</p>
 
 				<p className='text-sm mt-3 text-center px-4'>
-					"{userData?.author?.bio}"
+					`&ldquo;${userData?.author?.bio}&rdquo;`
 				</p>
 
 				<div className='mt-3 flex justify-between items-center gap-x-10'>

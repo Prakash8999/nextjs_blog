@@ -10,7 +10,7 @@ import * as dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 dayjs.extend(relativeTime);
 
-const page = () => {
+const Read = () => {
 	const { id } = useParams()
 	const fetchData = async () => {
 		const { data } = await axios.get(`/api/readpost/${id}`)
@@ -134,4 +134,4 @@ const page = () => {
 	)
 }
 
-export default page
+export default Read;

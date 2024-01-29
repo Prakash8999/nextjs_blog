@@ -4,7 +4,6 @@ import axios from 'axios'
 import { useParams } from 'next/navigation'
 import React, { useEffect } from 'react'
 
-import { usePathname } from 'next/navigation'
 import Image from 'next/image'
 import { BsGithub, BsLinkedin } from 'react-icons/bs'
 import { RiArticleLine, RiUserFollowLine } from 'react-icons/ri'
@@ -19,7 +18,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import * as dayjs from 'dayjs'
 
 
-const page = () => {
+const AnotherUserProfile = () => {
 	const { id } = useParams()
 	console.log(id);
 
@@ -71,7 +70,7 @@ const page = () => {
 					<p className='text-2xl font-semibold text-center mt-3'>{userData?.author?.name}</p>
 
 					<p className='text-sm mt-3 text-center px-4'>
-						"{userData?.author?.bio}"
+						`&ldquo;${userData?.author?.bio}&rdquo;`
 					</p>
 
 					<div className='mt-3 flex justify-between items-center gap-x-10'>
@@ -226,4 +225,4 @@ const page = () => {
 	)
 }
 
-export default page
+export default AnotherUserProfile;
