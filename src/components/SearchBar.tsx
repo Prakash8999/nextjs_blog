@@ -19,7 +19,7 @@ const ChangeablePlaceholderSearchBar = () => {
   const onSearch = (e: React.FormEvent) => {
     e.preventDefault()
     const encodedQuery = encodeURI(query)
-router.push(`/search?q=${encodedQuery}`)
+    router.push(`/search?q=${encodedQuery}`)
     console.log(encodedQuery);
 
   }

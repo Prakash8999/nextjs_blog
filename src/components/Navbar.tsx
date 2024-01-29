@@ -9,7 +9,7 @@ import { useSession, signIn, signOut } from 'next-auth/react'
 import SigninModalButton from './SigninModalButton';
 // import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
-import { authOptions } from '../../lib/auth';
+import { authOptions } from '../lib/auth';
 import { getServerSession } from 'next-auth/next'
 import UserData from './UserData';
 import { IoAddOutline } from "react-icons/io5";

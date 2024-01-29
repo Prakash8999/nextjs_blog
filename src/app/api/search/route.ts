@@ -1,6 +1,6 @@
 import { NextApiRequest } from "next";
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "../../../../lib/prismadb";
+import prisma from "../../../lib/prismadb";
 
 export async function GET(req: NextRequest, res: NextResponse) {
 	// const { q: query } = req.query;

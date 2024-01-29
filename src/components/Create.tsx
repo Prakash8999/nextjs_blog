@@ -21,7 +21,7 @@ import { Toaster, toast } from 'sonner'
 import { PostValidator, PostCreationRequest } from '../../validators/post'
 import UsersPost from './user/UsersPost'
 import { getServerSession } from 'next-auth'
-import { authOptions } from '../../lib/auth'
+import { authOptions } from '../lib/auth'
 import Spinner from './Loading'
 
 type FormData = z.infer<typeof PostValidator>

@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { getServerSession } from 'next-auth'
 import React from 'react'
-import { authOptions } from '../../../lib/auth'
+import { authOptions } from '../../lib/auth'
 import { useRouter } from 'next/navigation'
 
 interface postType {
