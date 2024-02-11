@@ -109,7 +109,7 @@ const SearchPost = () => {
     <>
 
 
-      <div className={`  bg-gray-100 min-h-screen h-full pt-5`}>
+      <div className={`  bg-gray-100 min-h-screen flex flex-col  items-center h-full pt-5`}>
 
         {
           isLoading ? < Skeleton count={5} baseColor='white' height={100} className='mb-5 rounded-lg' /> :

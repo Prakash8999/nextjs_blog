@@ -62,13 +62,7 @@ const SignIn = () => {
 					<FcGoogle className='text-2xl' />
 					<p>{loading ? 'Loading...' : 'Google'}</p></button>
 
-				<button onClick={loginwithgithub} disabled={loading} className='flex items-center w-full h-14 justify-center gap-x-4 text-xl bg-zinc-900 text-zinc-100 hover:bg-zinc-800 py-2  rounded-2xl ' >
-					<IoLogoGithub className='text-2xl' />
 
-
-
-
-					<p>{githubloadig ? 'Loading...' : 'Github'}</p></button>
 
 				<div className='flex  flex-col '>
 
@@ -84,8 +78,14 @@ const SignIn = () => {
 							setEmail(e.target.value)
 						}} className='h-14 bg-zinc-200 rounded-2xl placeholder:text-gray-400 px-3 outline-none' placeholder='Username' />
 						<input type="password" className='h-14 bg-zinc-200 rounded-2xl placeholder:text-gray-400 px-3 outline-none' placeholder='Password' />
+						<div className='text-sm flex gap-x-2 justify-center -mt-3'>
+							<p>Does not have a account</p>
+							<button className='text-blue-600'>
+								Signup
+							</button>
 
-						<button className='h-14  rounded-full bg-[rgba(217,58,0,255)]  px-3 '  >Login</button>
+						</div>
+						<button className='h-14  rounded-full bg-[rgba(217,58,0,255)]  px-3 -mt-3'  >Login</button>
 					</form>
 					{/* <p>new to Redlone ? </p>{' '} */}
 

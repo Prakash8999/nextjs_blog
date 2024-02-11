@@ -7,12 +7,9 @@ import Link from 'next/link'
 import { signOut } from 'next-auth/react';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
-interface userData {
-	user: Pick<User, 'name' | 'image' | 'email' >
-}
 
 
-const UserData = ({ user }: userData) => {
+const UserData = ({ user }: any) => {
 
 	const [show, setShow] = useState(false);
 	const showMenu = () => {
@@ -34,7 +31,8 @@ const UserData = ({ user }: userData) => {
 				<div className='flex items-center gap-x-3'>
 
 					<UserAvatar user={user} />
-					<p className="font-semibold text-base">{user.name}</p>
+					
+					<p className="font-semibold text-base">{user?.name}</p>
 				</div>
 
 				{
@@ -61,6 +59,7 @@ const UserData = ({ user }: userData) => {
 					<Link href={'/'}>Feed</Link>
 					<Link href={'/create'}>Create Post</Link>
 					<Link href={'/profile'}>Profile</Link>
+					<Link href={`/user/${user.username}`}>Your Post</Link>
 
 					<div className="flex items-center justify-between pr-4">
 						<p>Dark Mode</p>
