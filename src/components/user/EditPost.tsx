@@ -19,6 +19,7 @@ import { Toaster, toast } from 'sonner'
 import Spinner from '../Loading'
 import { PostValidator, PostCreationRequest } from '../../../validators/post'
 import { uploadFiles } from '../../../helpers/uploadthing'
+import { FaChrome } from 'react-icons/fa'
 // import Spinner from './Loading'
 
 
@@ -29,35 +30,37 @@ const EditPost = ({ session }: { session: any }) => {
 	const [cover, setCoverPhoto] = useState<string>('');
 	const [coverLoading, setCoverLoading] = useState<boolean>(false)
 	const [tags, setTags] = useState<string>('')
-	const [title, setTitle] = useState<string>('')
+	const [category, setCategory] = useState('')
 	const [editorContent, setEditorContent] = useState<any>(null);
 	const { id } = useParams()
+	const [title, setTitle] = useState<string>('')
 	const fetchData = async () => {
 		const { data } = await axios.get(`/api/readpost/${id}`)
 
 		return data
 	}
 	const { data, isError, isLoading } = useQuery({ queryKey: ['edit'], queryFn: fetchData, staleTime: 0 })
-	// console.log(data);
+	console.log(data);
 
 
 
 	const {
 		register,
 		handleSubmit,
-		
+
 		formState: { errors },
 		reset
 	} = useForm<FormData>({
 		resolver: zodResolver(PostValidator),
 		defaultValues: {
 
-			title: title,
+			title: data?.post?.title,
 			content: null,
 			publish: true,
 			draft: false,
 			coverPhoto: '',
-			tags: tags
+			tags: tags,
+			category: category
 
 		},
 	})
@@ -65,11 +68,12 @@ const EditPost = ({ session }: { session: any }) => {
 
 
 	const ref = useRef<EditorJS>()
-	// const _titleRef = useRef<HTMLTextAreaElement>(null)
+	const _titleRef = useRef<HTMLTextAreaElement>(null)
 	const _coverRef = useRef<HTMLImageElement>(null)
 	const router = useRouter()
 	const [isMounted, setIsMounted] = useState<boolean>(false)
 	const pathname = usePathname()
+
 	const [isDraftLoading, setIsDraftLoading] = useState(false)
 	const { mutate: updatePost, isPending } = useMutation({
 		mutationFn: async ({
@@ -78,10 +82,10 @@ const EditPost = ({ session }: { session: any }) => {
 			publish,
 			draft,
 			coverPhoto,
-			tags
-
+			tags,
+			category
 		}: PostCreationRequest) => {
-			const payload: PostCreationRequest = { title, content, publish, draft, coverPhoto, tags }
+			const payload: PostCreationRequest = { title, content, publish, draft, coverPhoto, tags, category }
 			const { data } = await axios.patch(`/api/updatepost/${id}`, payload)
 			return data
 		},
@@ -117,9 +121,10 @@ const EditPost = ({ session }: { session: any }) => {
 			draft,
 			coverPhoto,
 			tags,
+			category
 		}: PostCreationRequest) => {
 			setIsDraftLoading(true)
-			const payload: PostCreationRequest = { title, content, publish, draft, coverPhoto, tags }
+			const payload: PostCreationRequest = { title, content, publish, draft, coverPhoto, tags, category }
 			const { data } = await axios.patch(`/api/updatepost/${id}`, payload)
 			return data
 		},
@@ -157,12 +162,13 @@ const EditPost = ({ session }: { session: any }) => {
 		const ImageTool = (await import('@editorjs/image')).default
 		if (data) {
 			// reset({
-				// title: data?.post?.title,
+			// title: data?.post?.title,
 
 			// 	// Populate other fields if needed
 			// });
 			setCoverPhoto(data?.post?.coverPhoto ? data?.post?.coverPhoto : cover);
-
+			setTags(data?.post?.tags ? data?.post?.tags : tags);
+			setCategory(data?.post?.category ? data?.post?.category : category)
 
 			setTitle(data?.post?.title)
 			if (!ref.current) {
@@ -247,7 +253,7 @@ const EditPost = ({ session }: { session: any }) => {
 			await initializeEditor(reset)
 
 			setTimeout(() => {
-				// _titleRef?.current?.focus()
+				_titleRef?.current?.focus()
 			}, 2000)
 		}
 
@@ -262,18 +268,19 @@ const EditPost = ({ session }: { session: any }) => {
 	}, [isMounted, initializeEditor, id, reset])
 
 	async function onUpdate(data: FormData) {
-		console.log(data.coverPhoto);
+		// console.log(data.coverPhoto);
 
+		console.log(category);
 		const blocks = await ref.current?.save()
 
 		const payload: PostCreationRequest = {
-			title: title,
+			title: data.title || title,
 			content: blocks,
 			publish: true,
 			draft: false,
 			coverPhoto: cover,
-			tags: tags
-
+			tags: tags,
+			category: category,
 		}
 
 		updatePost(payload)
@@ -282,12 +289,13 @@ const EditPost = ({ session }: { session: any }) => {
 		const blocks = await ref.current?.save()
 
 		const payload: PostCreationRequest = {
-			title: title,
+			title: data.title || title,
 			content: blocks,
 			publish: false,
 			draft: true,
 			coverPhoto: cover,
-			tags: tags
+			tags: tags,
+			category: category
 		}
 
 		createDraft(payload)
@@ -297,7 +305,7 @@ const EditPost = ({ session }: { session: any }) => {
 		return null
 	}
 
-	// const { ref: titleRef, ...rest } = register('title')
+	const { ref: titleRef, ...rest } = register('title')
 	const { ref: coverRef, ...restCover } = register('coverPhoto')
 
 
@@ -323,7 +331,7 @@ const EditPost = ({ session }: { session: any }) => {
 		return notFound()
 	}
 
-// console.log(title);
+	// console.log(title);
 
 
 	return (
@@ -383,12 +391,11 @@ const EditPost = ({ session }: { session: any }) => {
 						)}
 
 
-{/* 
+
 						<TextareaAutosize
-								// value={data?.post?.title}
-								// value={data?.post?.title}
-								// onChange={ (e) => setTitle(e.target.value)}
-								defaultValue={data?.post?.title}
+
+							defaultValue={title}
+							// onChange={ (e) => setTitle(e.target.value)}
 							ref={(e) => {
 								titleRef(e)
 								// @ts-ignore
@@ -397,24 +404,40 @@ const EditPost = ({ session }: { session: any }) => {
 							{...rest}
 							placeholder='Title'
 							className='w-full h-12 resize-none py-2 pl-1 appearance-none overflow-hidden bg-transparent text-xl font-semibold border outline-none outline focus:border-black placeholder:font-normal rounded-md'
-						/> */}
+						/>
 
-						 <TextareaAutosize
+						{/* <TextareaAutosize
+							defaultValue={data?.post?.title}
 							value={title}
 							onChange={(e) => setTitle(e.target.value)}
 							placeholder='Title'
 							className='w-full h-12 resize-none py-2 pl-1 appearance-none overflow-hidden bg-transparent text-xl font-semibold border outline-none outline focus:border-black placeholder:font-normal rounded-md'
-						/> 
+						/> */}
 
-						<div className=' py-2 shadow-sm'>
+						<div className=' py-2 shadow-sm flex w-full gap-x-3'>
 							<input type="text"
 								onChange={(e) => {
 									setTags(e.target.value)
 								}}
+								value={tags}
+								placeholder='Add some tags..' className=' outline-none border w-2/3 h-12 rounded-md pl-2' />
 
-								placeholder='Add some tags..' className=' outline-none w-full h-12' />
+
+
+							<select name="" id="" value={category} onChange={(e) => setCategory(e.target.value)} className='w-1/3  outline-none border  h-12 rounded-md pl-2'>
+
+								<option value="all">Select Category</option>
+								<option value="tech">Tech</option>
+								<option value="health">Health</option>
+								<option value="space">Space</option>
+								<option value="mysteries">Mysteries</option>
+								<option value="finance">Finanace</option>
+								<option value="sports">Sports</option>
+
+							</select>
+
+
 						</div>
-
 
 
 
@@ -442,8 +465,16 @@ const EditPost = ({ session }: { session: any }) => {
 					</div>
 				</form>
 
-				<div className='w-1/4 bg-white h-[50vh] rounded-lg p-5'>
-					Idk what to add here
+				<div className='w-1/4 bg-white h-[40vh] rounded-lg p-5 flex flex-col gap-y-4'>
+					<div className='flex gap-x-2 underline-offset-2 items-center'>
+						<FaChrome className='h-5 w-5 md:h-7 md:w-7 text-red-400' />	Posting on Redlone
+					</div>
+					<hr />
+					<p>1)Remember the human</p>
+					<p>2)Behave like you would in real life</p>
+					<p>3)Look for the original source of content</p>
+					<p>4)Search for duplicates before posting</p>
+
 				</div>
 
 				<Toaster richColors position='top-center' />

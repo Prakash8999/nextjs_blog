@@ -22,9 +22,7 @@ const Draft = ({ userId }: user) => {
 	}
 
 	const { isLoading, data } = useQuery({ queryKey: ["draftpost"], queryFn: fetchdata, staleTime: 1000 })
-	console.log(data?.draftPost);
-
-
+	
 	return (
 		<>
 			<div className='flex  justify-center  pt-8 '>
@@ -67,10 +65,12 @@ const Draft = ({ userId }: user) => {
 									{!post?.coverPhoto ?
 										<div className='mt-4'>
 
-											<Link className='' href={`/read/${post?.id}`}>
+
+
+											{/* <Link className='' href={`/read/${post?.id}`}> */}
 												<h2 className='font-semibold text-xl '>{post?.title}</h2>
 
-											</Link>
+											{/* </Link> */}
 
 
 

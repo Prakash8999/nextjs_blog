@@ -7,8 +7,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
 	try {
 		const searchParams = req.nextUrl.searchParams;
 		const searchQuery = searchParams.get("q")
-		console.log(searchQuery);
-
+	
 		if (typeof searchQuery != 'string') {
 			throw new Error("Invalid Request")
 		}

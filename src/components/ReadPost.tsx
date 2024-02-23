@@ -41,6 +41,10 @@ const ReadPost = ({ className }: cn) => {
 
 	// return <Skeleton count={5}  className='w-[70vw] h-full'/>
 	// 	}
+const savePost = (id:string) =>{
+
+}
+
 	return (
 		<>
 

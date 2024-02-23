@@ -3,7 +3,7 @@
 import EditorOutput from '@/components/ReadPostContentOutput'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import { useParams } from 'next/navigation'
+import { notFound, useParams } from 'next/navigation'
 import React, { useMemo } from 'react'
 import Image from 'next/image'
 import PublicUsersProfile from '@/components/PublicUsersProfile'
@@ -20,13 +20,17 @@ const ReadSinglePost = ({session} :any) => {
 		return data
 	}
 	const { data, isError, isLoading } = useQuery({ queryKey: ['singlepost'], queryFn: fetchData, staleTime: -4 })
-	// console.log(data)
+	console.log(data)
 	// if (isLoading) {
 	// 	return <div className='flex justify-center items-c enter bg-gray-100 h-screen'>
 
 	// 		<Spinner />
 	// 	</div>
 	// }
+	if (data?.post == null) {
+		return notFound()
+		
+	}
 
 	
   return (

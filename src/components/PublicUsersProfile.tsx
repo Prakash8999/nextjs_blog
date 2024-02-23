@@ -16,7 +16,7 @@ const PublicUsersProfile = ({ userData, className, session }: { userData: any, c
 
 		return list.includes(userData?.author?.id);
 	}, [userData?.author?.id, session?.user.followingIds]);
-	console.log(isFollowing); //false
+	 //false
 
 
 	const router = useRouter()

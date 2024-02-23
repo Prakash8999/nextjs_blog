@@ -6,15 +6,12 @@ import prisma from "@/lib/prismadb";
 
 export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
 	try {
-		console.log(params);
 
 		const { id } = params;
-		console.log(id);
-
 
 		const body = await request.json()
-		const { title, content, publish, draft, coverPhoto, tags } = PostValidator.parse(body);
-		console.log(coverPhoto);
+		const { title, content, publish, draft, coverPhoto, tags , category} = PostValidator.parse(body);
+
 
 		const session = await getServerSession(authOptions);
 		if (!session) {
@@ -31,7 +28,8 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
 				publish,
 				draft,
 				coverPhoto,
-				tags
+				tags,
+				category
 			}
 		})
 
