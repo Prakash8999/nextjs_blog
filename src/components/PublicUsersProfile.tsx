@@ -1,31 +1,73 @@
+'use client'
 import axios from 'axios'
 import Image from 'next/image'
-import React from 'react'
+import { useRouter } from 'next/navigation'
+import React, { useMemo, useState } from 'react'
 import { AiOutlineLike } from 'react-icons/ai'
 import { BsGithub, BsLinkedin } from 'react-icons/bs'
 import { GrLocation } from 'react-icons/gr'
 import { RiArticleLine, RiUserFollowLine } from 'react-icons/ri'
+import { Toaster, toast } from 'sonner'
 
-const PublicUsersProfile = ({ userData , className}: { userData: any, className:any }) => {
+const PublicUsersProfile = ({ userData, className, session }: { userData: any, className: any, session: any }) => {
+	const [loading, setLoading] = useState(false)
+	const isFollowing = useMemo(() => {
+		const list = session?.user.followingIds || [];
 
+		return list.includes(userData?.author?.id);
+	}, [userData?.author?.id, session?.user.followingIds]);
+	console.log(isFollowing); //false
+
+
+	const router = useRouter()
 	const handleFollow = () => {
-		console.log(userData?.user?.id);
-
-		try {
-			axios('/api/follow', {
-				method: "POST",
-				data: {
-					followerId: String(userData?.author?.id)
-				}
-			}).then((res) => {
-				console.log(res);
-
-			})
-		} catch (error) {
-			console.log(error);
-
+		if (!session) {
+			toast.warning("Please Login First")
 		}
 
+
+		if (session?.user.id == userData?.author?.id) {
+			router.push('/profile')
+		}
+		else {
+			setLoading(true)
+			try {
+				const userId = userData?.author?.id
+				console.log(userData?.author?.id);
+
+				if (isFollowing) {
+					axios(`/api/unfollow?userId=${userId}`, {
+						method: "DELETE",
+
+					}).then((res) => {
+						console.log(res);
+						setLoading(false)
+					})
+						.catch((err) => {
+							console.log(err);
+							setLoading(false)
+
+						})
+				}
+				else {
+					axios(`/api/follow`, {
+						method: "POST",
+						data: {
+							userId: userData?.author?.id
+						}
+					}).then((res) => {
+						setLoading(false)
+						console.log(res);
+					})
+
+				}
+
+			} catch (error) {
+				console.log(error);
+				setLoading(false)
+
+			}
+		}
 	}
 
 	return (
@@ -81,14 +123,17 @@ const PublicUsersProfile = ({ userData , className}: { userData: any, className:
 
 				<div className='mt-6'>
 
-
-					<button onClick={handleFollow} className='bg-blue-500 px-4 py-2 text-white rounded-md text-xl'>
-						Follow
+					<button 
+					disabled={loading}
+					onClick={handleFollow} className={`${isFollowing ? 'bg-gray-400 opacity-50' : 'bg-blue-600 '} px-4 py-2 text-white rounded-md text-xl`}>
+						{
+							session?.user.id == userData?.author?.id ? 'Edit' : isFollowing ? 'Unfollow' : 'Follow'
+						}
 					</button>
 				</div>
 
 			</div>
-
+			<Toaster />
 
 
 		</>

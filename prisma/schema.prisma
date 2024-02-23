@@ -72,11 +72,11 @@ model User {
   github        String?
   coding_skills String?
   website       String?
-  Vote          Vote[]
   bio           String?     @default("")
   Followers     Followers[]
   Following     Following[]
   PostCount     Int?
+  followingIds  String[]    @db.ObjectId
 
   @@unique([email, id])
 }
@@ -122,14 +122,7 @@ model Post {
   updatedAt  DateTime @updatedAt
   publish    Boolean? @default(true)
   draft      Boolean? @default(false)
-  Vote       Vote[]
   tags       String?
-}
-
-model Vote {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  user   User   @relation(fields: [userId], references: [id])
-  userId String @db.ObjectId
-  post   Post   @relation(fields: [postId], references: [id])
-  postId String @db.ObjectId
+  likedIds   String[] @db.ObjectId
+  category   String?
 }

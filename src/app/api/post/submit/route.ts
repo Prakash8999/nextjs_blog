@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
 	try {
 		const body = await request.json()
 
-		const { title, content, publish, draft,coverPhoto, tags } = PostValidator.parse(body)
+		const { title, content, publish, draft,coverPhoto, tags , category} = PostValidator.parse(body)
 
 		const session = await getServerSession(authOptions)
 		if (!session) {
@@ -24,7 +24,8 @@ export async function POST(request: NextRequest) {
 				publish,
 				draft,
 				coverPhoto,
-				tags
+				tags,
+				category
 			}
 		})
 

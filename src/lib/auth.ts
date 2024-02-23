@@ -35,6 +35,7 @@ export const authOptions: NextAuthOptions = {
         session.user.linkedin = token.linkedin
         session.user.coding_skills = token.coding_skills
         session.user.website = token.website
+        session.user.followingIds = token.followingIds
       }
       return session
     },
@@ -68,7 +69,8 @@ export const authOptions: NextAuthOptions = {
         github: dbUser.github,
         linkedin: dbUser.linkedin,
         coding_skills: dbUser.coding_skills,
-        website: dbUser.website
+        website: dbUser.website,
+        followingIds:dbUser.followingIds
       }
     },
     redirect() {

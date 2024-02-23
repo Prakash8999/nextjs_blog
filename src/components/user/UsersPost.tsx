@@ -2,7 +2,7 @@
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { useParams, useRouter } from 'next/navigation'
-import React, { useEffect } from 'react'
+import React, { useEffect, useId, useMemo } from 'react'
 
 import Image from 'next/image'
 import { BsGithub, BsLinkedin } from 'react-icons/bs'
@@ -16,11 +16,13 @@ import Link from 'next/link'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import * as dayjs from 'dayjs'
+import { CiEdit } from "react-icons/ci";
+import { Toaster, toast } from 'sonner'
 
 
-const UserPostDetails = ({session} : any) => {
+const UserPostDetails = ({ session }: any) => {
 	const { id } = useParams()
-	console.log(id);
+
 
 	const fetchUserPublicData = async () => {
 		const { data } = await axios.get(`/api/publicuserdata/${id}`)
@@ -32,42 +34,73 @@ const UserPostDetails = ({session} : any) => {
 
 
 	const { data: userData, isError, isLoading } = useQuery({ queryKey: ['userpublicdata'], queryFn: fetchUserPublicData, staleTime: 0 })
+
 	console.log(userData);
 
 
+	const isFollowing = useMemo(() => {
+		const list = session?.user.followingIds || [];
 
-	console.log(userData?.author?.id);
+		return list.includes(userData?.author?.id);
+	}, [userData?.author?.id, session?.user.followingIds]);
+	console.log(isFollowing); //false
+
+
 	const router = useRouter()
 	const handleFollow = () => {
-
-if(session?.user.id == userData?.author?.id){
-router.push('/profile')
-} 
-else{
-
-		try {
-			axios('/api/follow', {
-				method: "POST",
-				data: {
-					followerId: String(userData?.user?.id)
-				}
-			}).then((res) => {
-				console.log(res);
-
-			})
-		} catch (error) {
-			console.log(error);
-
+		if (!session) {
+			toast.warning("Please Login First")
 		}
-	}
+
+
+		if (session?.user.id == userData?.author?.id) {
+			router.push('/profile')
+		}
+		else {
+
+			try {
+				const userId = userData?.author?.id
+				console.log(userData?.author?.id);
+
+				if (isFollowing) {
+					axios(`/api/unfollow?userId=${userId}`, {
+						method: "DELETE",
+
+					}).then((res) => {
+						console.log(res);
+
+					})
+						.catch((err) => {
+							console.log(err);
+
+						})
+				}
+				else {
+					axios(`/api/follow`, {
+						method: "POST",
+						data: {
+							userId: userData?.author?.id
+						}
+					}).then((res) => {
+
+						console.log(res);
+					})
+
+				}
+
+			} catch (error) {
+				console.log(error);
+
+			}
+		}
 	}
 	if (isLoading) {
 		return <h1>
 			Loading.......
 		</h1>
 	}
-	console.log(session?.user.id);
-	
+
+
 	return (
 		<>
 			<div className='bg-gray-100 w-full min-h-screen h-full flex  justify-start gap-x-10 pt-9 pl-12 '>
@@ -116,7 +149,7 @@ else{
 						<div className='flex gap-x-2 text-sm items-center pl-4 '>
 							<RiUserFollowLine />
 
-							<p>Followers: {userData?.author?.Post?.length}</p>
+							<p>Followers: {userData?.followerCount}</p>
 						</div>
 
 					</div>
@@ -124,10 +157,10 @@ else{
 					<div className='mt-6'>
 
 
-						<button onClick={handleFollow} className='bg-blue-500 px-4 py-2 text-white rounded-md text-xl'>
-						{
-							session?.user.id == userData?.author?.id  ? 'Edit' : 'Follow'
-						}
+						<button onClick={handleFollow} className={`${isFollowing ? 'bg-gray-400 opacity-50' : 'bg-blue-600 '} px-4 py-2 text-white rounded-md text-xl`}>
+							{
+								session?.user.id == userData?.author?.id ? 'Edit' : isFollowing ? 'Unfollow' : 'Follow'
+							}
 						</button>
 					</div>
 
@@ -142,18 +175,30 @@ else{
 								return <div key={index} className={` relative bg-white flex  flex-col h-fit overflow-hidden   mb-4 p-4 rounded-xl shadow`}>
 									<div className='flex gap-x-3 w-fit'>
 										<Image src={userData?.author?.image} alt='User Image' width={36} height={36} className='object-cover rounded-full' referrerPolicy='no-referrer' />
-										<div className='flex flex-col -space-y-1'>
+										<div className='flex   -space-y-1 justify-between w-[45vw]'>
+											<div>
 
-											<p className='text-sm text-black font-semibold '> {userData.author?.username}
+												<p className='text-sm text-black font-semibold '> {userData.author?.username}
 
-											</p>
-											<p className='text-sm'>
 
-												{
-													// @ts-ignore
-													dayjs(post?.createdAt).format('DD/MM/YY')
-												}
-											</p>
+												</p>
+												<p className='text-sm'>
+
+													{
+														// @ts-ignore
+														dayjs(post?.createdAt).format('DD/MM/YY')
+													}
+												</p>
+											</div>
+
+											{
+												session?.user.id == userData?.author?.id ? <button className='text-3xl'>
+													<Link href={`/edit/${post?.id}`}>
+														<CiEdit />
+													</Link>
+
+												</button> : null
+											}
 										</div>
 
 									</div>
@@ -231,6 +276,7 @@ else{
 
 				</div>
 			</div>
+			<Toaster />
 		</>
 	)
 }

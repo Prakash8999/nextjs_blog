@@ -19,6 +19,8 @@ export async function GET() {
 
 		const post = await prisma.post.findMany({
 
+where:{	draft:false},
+
 			select: {
 				author: {
 					select: {
@@ -35,7 +37,8 @@ export async function GET() {
 				draft: true,
 				publish: true,
 				coverPhoto: true,
-				tags: true
+				tags: true,
+				category: true,
 			}
 			,
 			orderBy: {

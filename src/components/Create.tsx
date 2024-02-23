@@ -27,6 +27,7 @@ export const Create = () => {
 
   const [cover, setCoverPhoto] = useState<string>('');
   const [coverLoading, setCoverLoading] = useState<boolean>(false)
+  const [category, setCategory] = useState('all')
   const [tags, setTags] = useState<string>('')
   const {
     register,
@@ -41,7 +42,8 @@ export const Create = () => {
       publish: true,
       draft: false,
       coverPhoto: '',
-      tags: tags
+      tags: tags,
+      category: category
 
     },
   })
@@ -62,7 +64,7 @@ export const Create = () => {
       tags
 
     }: PostCreationRequest) => {
-      const payload: PostCreationRequest = { title, content, publish, draft, coverPhoto, tags}
+      const payload: PostCreationRequest = { title, content, publish, draft, coverPhoto, tags, category }
       const { data } = await axios.post('/api/post/submit', payload)
       return data
     },
@@ -98,9 +100,10 @@ export const Create = () => {
       draft,
       coverPhoto,
       tags,
+      category
     }: PostCreationRequest) => {
       setIsDraftLoading(true)
-      const payload: PostCreationRequest = { title, content, publish, draft, coverPhoto, tags }
+      const payload: PostCreationRequest = { title, content, publish, draft, coverPhoto, tags, category }
       const { data } = await axios.post('/api/post/submit', payload)
       return data
     },
@@ -190,11 +193,7 @@ export const Create = () => {
     if (Object.keys(errors).length) {
       for (const [_key, value] of Object.entries(errors)) {
         value
-        // toast({
-        //   title: 'Something went wrong.',
-        //   description: (value as { message: string }).message,
-        //   variant: 'destructive',
-        // })
+
         console.log(errors);
 
         toast.error(errors?.title?.message)
@@ -236,8 +235,8 @@ export const Create = () => {
       publish: true,
       draft: false,
       coverPhoto: cover,
-      tags: tags
-
+      tags: tags,
+      category: category
     }
 
     createPost(payload)
@@ -251,7 +250,8 @@ export const Create = () => {
       publish: false,
       draft: true,
       coverPhoto: cover,
-      tags:tags
+      tags: tags,
+      category:category
     }
 
     createDraft(payload)
@@ -277,6 +277,8 @@ export const Create = () => {
       console.error(error);
     }
   };
+
+
 
   return (
     <div className='w-full flex justify-center gap-x-5 p-4 bg-zinc-100	rounded-lg border border-zinc-200'>
@@ -345,13 +347,29 @@ export const Create = () => {
           />
 
 
-          <div className=' py-2 shadow-sm'>
+          <div className=' py-2 shadow-sm flex w-full gap-x-3'>
             <input type="text"
               onChange={(e) => {
                 setTags(e.target.value)
               }}
 
-              placeholder='Add some tags..' className=' outline-none w-full h-12' />
+              placeholder='Add some tags..' className=' outline-none border w-2/3 h-12 rounded-md pl-2' />
+
+
+
+            <select name="" id="" value={category} onChange={(e) => setCategory(e.target.value)} className='w-1/3  outline-none border  h-12 rounded-md pl-2'>
+
+              <option value="all">Select Category</option>
+              <option value="tech">Tech</option>
+              <option value="health">Health</option>
+              <option value="space">Space</option>
+              <option value="mysteries">Mysteries</option>
+              <option value="finance">Finanace</option>
+              <option value="sports">Sports</option>
+
+            </select>
+
+
           </div>
 
 
@@ -382,7 +400,7 @@ export const Create = () => {
       </form>
 
       <div className='w-1/4 bg-white h-[50vh] rounded-lg p-5'>
-         Idk what to add here
+        Idk what to add here
       </div>
 
       <Toaster richColors position='top-center' />

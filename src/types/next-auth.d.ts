@@ -11,7 +11,8 @@ declare module 'next-auth/jwt' {
     github?: string | null
     website?: string | null
     coding_skills: string | null,
-    linkedin: string | null
+    linkedin: string | null,
+    followingIds: string | null
   }
 }
 
@@ -24,7 +25,8 @@ declare module 'next-auth' {
       github?: string | null
       website?: string | null
       coding_skills: string | null,
-      linkedin: string | null
+      linkedin: string | null,
+      followingIds: string | null
     }
   }
 }

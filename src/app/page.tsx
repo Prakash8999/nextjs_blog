@@ -1,11 +1,11 @@
-
-
 import Categories from '@/components/Categories';
-import CreatePostCard from '@/components/CreatePostCard';
 import ReadPost from '@/components/ReadPost';
+import { authOptions } from '@/lib/auth';
+import { getServerSession } from 'next-auth';
 
 
-export default function Home() {
+export default async function Home() {
+const session = await getServerSession(authOptions)
 
 
   return (
@@ -15,7 +15,7 @@ export default function Home() {
         {/* <h1 className='text-4xl font-semibold'>Your feed</h1> */}
 
         <div className=' flex gap-x-5  '>
-          <Categories  />
+          <Categories session = {session}  />
           <ReadPost className='w-3/5' />
           {/* <CreatePostCard className='w-2/5'/> */}
         </div>

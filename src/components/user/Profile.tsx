@@ -77,7 +77,7 @@ const Profile = ({ session }: user) => {
 			}).catch((err) => {
 				console.log(err);
 				setIsPending(false)
-				toast.error(err?.message)
+				toast.error(err?.response?.data?.message)
 			})
 		} catch (error) {
 			console.log(error);
@@ -224,7 +224,7 @@ const Profile = ({ session }: user) => {
 
 				</div>
 			</div>
-			<Toaster richColors position='top-center'/>
+			<Toaster richColors position='top-center' />
 
 		</>
 	)

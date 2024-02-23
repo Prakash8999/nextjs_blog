@@ -8,7 +8,7 @@ const ChangeablePlaceholderSearchBar = () => {
   const router = useRouter();
   const togglePlaceholder = () => {
     setPlaceholder((prevPlaceholder) =>
-      prevPlaceholder === 'Search on Redlone' ? 'Search User or Title' : 'Search on Redlone'
+      prevPlaceholder === 'Search on Redlone' ? 'Search User or Title or Tags' : 'Search on Redlone'
     );
   };
   useEffect(() => {
