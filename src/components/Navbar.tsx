@@ -1,5 +1,3 @@
-
-
 import LoginModal from '@/app/modal/LoginModal';
 import Link from 'next/link';
 import React from 'react'
@@ -7,7 +5,6 @@ import { useState } from 'react'
 import { FaChrome } from "react-icons/fa";
 import { useSession, signIn, signOut } from 'next-auth/react'
 import SigninModalButton from './SigninModalButton';
-
 import { authOptions } from '@/lib/auth';
 import { getServerSession } from 'next-auth/next'
 import UserData from './UserData';
@@ -15,10 +12,10 @@ import { IoAddOutline } from "react-icons/io5";
 import { Toaster, toast } from 'sonner';
 import SigninModalButtonPlusIcon from './SignInModalButtonPlusIcon';
 import ChangeablePlaceholderSearchBar from './SearchBar';
-const Navbar = async () => {
+const Navbar =  ({session}:any) => {
 
 
-  const session = await getServerSession(authOptions)
+  // const session = await getServerSession(authOptions)
 
   // console.log(session);
 

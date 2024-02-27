@@ -4,6 +4,8 @@ import './globals.css'
 import Navbar from '@/components/Navbar'
 import { NextAuthProvider } from '@/components/Providers'
 import { Poppins } from 'next/font/google';
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 const inter = Inter({ subsets: ['latin'] })
 const poppins = Poppins({
   subsets: ['latin'],
@@ -17,20 +19,22 @@ export const metadata: Metadata = {
 }
 
 
-export default function RootLayout({
+export  default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
-}) {
+}) 
+{
+  const session = await getServerSession(authOptions)
   return (
-    <html lang="en"  className={`${poppins.variable}`}>
+    <html lang="en" className={`${poppins.variable}`}>
       <body className={inter.className}>
 
         <NextAuthProvider>
 
           <div className='relative'>
 
-            <Navbar />
+            <Navbar session = {session}/>
             <div className='mt-16'>
 
               {children}

@@ -15,7 +15,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import * as dayjs from 'dayjs'
 import { useSearchParams } from 'next/navigation'
-import Like from './Like'
+
 const fetchPost = async () => {
 	const { data } = await axios.get('/api/readpost')
 	// console.log(post)
