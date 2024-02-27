@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid'
 import { NextAuthOptions, getServerSession } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import GitHubProvider from 'next-auth/providers/github'
+import { JWT } from 'next-auth/jwt'
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   session: {
@@ -39,7 +40,7 @@ export const authOptions: NextAuthOptions = {
       }
       return session
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user }) : Promise<JWT> {
       const dbUser = await prisma.user.findFirst({
         where: {
           email: token.email,
@@ -47,7 +48,7 @@ export const authOptions: NextAuthOptions = {
       })
       if (!dbUser) {
         token.id = user!.id
-        return token
+        return token as JWT;
       }
       if (!dbUser.username) {
         await prisma.user.update({
@@ -59,6 +60,7 @@ export const authOptions: NextAuthOptions = {
           },
         })
       }
+      const followingIdsAsString = dbUser.followingIds.join(',')
       return {
         id: dbUser.id,
         name: dbUser.name,
@@ -70,8 +72,8 @@ export const authOptions: NextAuthOptions = {
         linkedin: dbUser.linkedin,
         coding_skills: dbUser.coding_skills,
         website: dbUser.website,
-        followingIds:dbUser.followingIds
-      }
+        followingIds:followingIdsAsString
+      } 
     },
     redirect() {
       return '/'

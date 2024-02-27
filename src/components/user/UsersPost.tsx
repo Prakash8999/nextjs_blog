@@ -69,7 +69,7 @@ const UserPostDetails = ({ session }: any) => {
 
 			try {
 				const userId = userData?.author?.id
-				console.log(userData?.author?.id);
+				
 
 				if (isFollowing) {
 					axios(`/api/unfollow?userId=${userId}`, {

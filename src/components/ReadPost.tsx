@@ -35,6 +35,7 @@ const ReadPost = ({ className, session }: cn) => {
 	const searchParams = useSearchParams()
 	const category = searchParams.get('category')
 
+console.log(data);
 
 	// const {isLoading,isError,data} = useQuery({queryKey:"postdata", queryFn:fetchPost,  staleTime:10000})
 	// 	if (isLoading) {
