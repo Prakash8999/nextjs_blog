@@ -64,7 +64,7 @@ const UserData = ({ user }: any) => {
 						<Link href={'/'}>Feed</Link>
 						<Link href={'/create'}>Create Post</Link>
 						<Link href={'/profile'}>Profile</Link>
-						<Link href={`/user/${user.username}`}>Your Post</Link>
+						<Link href={`/user/${user.username}?query=published`}>Your Post</Link>
 
 						<div className="flex items-center justify-between pr-4">
 							<p>Dark Mode</p>

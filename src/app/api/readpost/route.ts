@@ -17,9 +17,10 @@ export async function GET() {
 			return NextResponse.json({ message: "Post Fetch successfully", post: parsedCachedValue }, { status: 200 })
 		}
 
-		const post = await prisma.post.findMany({
+		const limit = '3';
 
-where:{	draft:false},
+		const post = await prisma.post.findMany({
+			where: { draft: false },
 
 			select: {
 				author: {
@@ -39,12 +40,16 @@ where:{	draft:false},
 				coverPhoto: true,
 				tags: true,
 				category: true,
+				likedIds: true
 			}
 			,
+
+
 			orderBy: {
 				createdAt: 'desc',
 			},
 		})
+
 
 		await redisClient.set("post", JSON.stringify(post))
 		await redisClient.expire("post", 30)

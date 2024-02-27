@@ -5,17 +5,17 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 
 
-export async function DELETE(req:NextRequest ) {
+export async function DELETE(req: NextRequest) {
 
 	try {
 
 		const searchParams = req.nextUrl.searchParams;
 		const userId = searchParams.get("userId")
-		
 
 
 
-		// const { currentUser } = await serverAuth(req, res);
+
+
 		const session = await getAuthSession()
 		if (!userId || typeof userId !== "string") {
 			//   return res.status(400).json({ message: "Invalid request" });

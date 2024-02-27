@@ -23,9 +23,15 @@ const Draft = ({ userId }: user) => {
 
 	const { isLoading, data } = useQuery({ queryKey: ["draftpost"], queryFn: fetchdata, staleTime: 1000 })
 	
+
+	if (data?.draftPost?.length == 0) {
+		return <h1 className='text-2xl flex justify-center items-center pt-10 '>
+			No Data Available
+		</h1>
+	}
 	return (
 		<>
-			<div className='flex  justify-center  pt-8 '>
+			<div className='flex  justify-center  pt-3 '>
 
 				{
 					isLoading ? < Skeleton count={5} baseColor='white' height={100} className='mb-5 rounded-lg' /> :

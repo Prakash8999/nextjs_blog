@@ -16,7 +16,7 @@ const session = await getServerSession(authOptions)
 
         <div className=' flex gap-x-5  '>
           <Categories session = {session}  />
-          <ReadPost className='w-3/5' />
+          <ReadPost className='w-3/5'  session = {session}/>
           {/* <CreatePostCard className='w-2/5'/> */}
         </div>
       </div>

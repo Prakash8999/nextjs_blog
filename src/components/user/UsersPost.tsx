@@ -1,7 +1,7 @@
 'use client'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import { useParams, useRouter } from 'next/navigation'
+import { notFound, useParams, usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect, useId, useMemo } from 'react'
 
 import Image from 'next/image'
@@ -18,11 +18,13 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import * as dayjs from 'dayjs'
 import { CiEdit } from "react-icons/ci";
 import { Toaster, toast } from 'sonner'
+import Draft from './Draft'
 
 
 const UserPostDetails = ({ session }: any) => {
 	const { id } = useParams()
-
+	const pathname = usePathname();
+	const { replace } = useRouter();
 
 	const fetchUserPublicData = async () => {
 		const { data } = await axios.get(`/api/publicuserdata/${id}`)
@@ -30,20 +32,27 @@ const UserPostDetails = ({ session }: any) => {
 
 		return data
 	}
+	const query = useSearchParams()
+	const getPostPublishedorDraft = query.get('query')
 
 
 
 	const { data: userData, isError, isLoading } = useQuery({ queryKey: ['userpublicdata'], queryFn: fetchUserPublicData, staleTime: 0 })
 
-	console.log(userData);
 
 
+	const params = new URLSearchParams(query.toString())
+	const postDetail = (post: string) => {
+
+		params.set('query', post)
+		replace(`${pathname}?${params.toString()}`);
+	}
 	const isFollowing = useMemo(() => {
 		const list = session?.user.followingIds || [];
 
 		return list.includes(userData?.author?.id);
 	}, [userData?.author?.id, session?.user.followingIds]);
-	console.log(isFollowing); //false
+	// console.log(isFollowing); //false
 
 
 	const router = useRouter()
@@ -99,7 +108,7 @@ const UserPostDetails = ({ session }: any) => {
 			Loading.......
 		</h1>
 	}
-
+	
 
 	return (
 		<>
@@ -168,8 +177,29 @@ const UserPostDetails = ({ session }: any) => {
 
 
 				<div className='w-2/4 '>
-
 					{
+						session?.user.id == userData?.author?.id ? <div className='flex gap-x-14 justify-center pb-2'>
+							<button onClick={() => {
+								postDetail('published')
+							}}
+								className={`${getPostPublishedorDraft == 'published' ? 'bg-blue-600 text-white' : 'bg-gray-300 text-black'}  text-xl border py-1.5 w-36 rounded-lg `}
+
+							>
+								Published
+							</button>
+							<button onClick={() => {
+								postDetail('draft')
+							}}
+								className={`${getPostPublishedorDraft == 'draft' ? 'bg-blue-600 text-white' : 'bg-gray-300 text-black'}  border text-xl py-1.5 w-36 rounded-lg `}>
+								Draft
+							</button>
+						</div> : null
+					}
+
+
+{
+	getPostPublishedorDraft == 'draft' ? <Draft userId={session?.user?.id}/> : 	getPostPublishedorDraft == 'published' ? <div>
+		{
 						isLoading ? < Skeleton count={5} baseColor='white' height={100} className='mb-5 rounded-lg' /> :
 							userData?.author?.Post?.map((post: any, index: number) => {
 								return <div key={index} className={` relative bg-white flex  flex-col h-fit overflow-hidden   mb-4 p-4 rounded-xl shadow`}>
@@ -272,6 +302,116 @@ const UserPostDetails = ({ session }: any) => {
 
 					}
 
+	</div> : <div>
+	{
+						isLoading ? < Skeleton count={5} baseColor='white' height={100} className='mb-5 rounded-lg' /> :
+							userData?.author?.Post?.map((post: any, index: number) => {
+								return <div key={index} className={` relative bg-white flex  flex-col h-fit overflow-hidden   mb-4 p-4 rounded-xl shadow`}>
+									<div className='flex gap-x-3 w-fit'>
+										<Image src={userData?.author?.image} alt='User Image' width={36} height={36} className='object-cover rounded-full' referrerPolicy='no-referrer' />
+										<div className='flex   -space-y-1 justify-between w-[45vw]'>
+											<div>
+
+												<p className='text-sm text-black font-semibold '> {userData.author?.username}
+
+
+												</p>
+												<p className='text-sm'>
+
+													{
+														// @ts-ignore
+														dayjs(post?.createdAt).format('DD/MM/YY')
+													}
+												</p>
+											</div>
+
+											{
+												session?.user.id == userData?.author?.id ? <button className='text-3xl'>
+													<Link href={`/edit/${post?.id}`}>
+														<CiEdit />
+													</Link>
+
+												</button> : null
+											}
+										</div>
+
+									</div>
+
+									<div>
+										{!post?.coverPhoto ?
+											<div className='mt-4'>
+
+												<Link className='' href={`/read/${post?.id}`}>
+													<h2 className='font-semibold text-xl '>{post?.title}</h2>
+
+												</Link>
+
+
+												<div className='flex justify-between pt-2 '>
+													<div className='flex   gap-x-10'>
+
+														<button >
+															<AiOutlineLike className='text-2xl' />
+														</button>
+
+
+														<button>
+															<FaRegComments className='text-2xl' />
+														</button>
+													</div>
+
+
+													<button title='save'>
+														<IoSaveOutline className='text-2xl' />
+													</button>
+												</div>
+											</div>
+
+											: <div className='mt-4'>
+
+												<Link className='' href={`/read/${post?.id}`}>
+
+													<Image alt='cover photo' src={post?.coverPhoto} width={1000} height={600} className=' h-[50vh] object-cover rounded-lg shadow-lg' priority />
+													<h2 className='font-semibold text-xl mt-2'>{post?.title}</h2>
+												</Link>
+
+												<div className='flex justify-between pt-2 '>
+													<div className='flex   gap-x-10'>
+
+														<button >
+															<AiOutlineLike className='text-2xl' />
+														</button>
+
+
+														<button >
+															<FaRegComments className='text-2xl' />
+														</button>
+													</div>
+
+
+													<button title='save'>
+														<IoSaveOutline className='text-2xl' />
+													</button>
+												</div>
+											</div>}
+
+
+									</div>
+
+
+									{/* <div className='absolute bottom-0 left-0 h-16 w-full bg-gradient-to-t from-white to-transparent'></div> */}
+								</div>
+
+							})
+
+					}
+
+	</div>
+}
+
+
+
+					
 
 
 				</div>
