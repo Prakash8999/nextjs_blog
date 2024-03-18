@@ -10,13 +10,13 @@ const session = await getServerSession(authOptions)
 
   return (
     <>
-      <div className='px-5 pt-5 min-h-screen h-full bg-gray-100'>
+      <div className='px-5 pt-3 flex flex-col min-h-screen h-full bg-[#0C1615] items-center'>
 
         {/* <h1 className='text-4xl font-semibold'>Your feed</h1> */}
 
-        <div className=' flex gap-x-5  '>
+        <div className='   '>
           <Categories session = {session}  />
-          <ReadPost className='w-3/5'  session = {session}/>
+          <ReadPost className=''  session = {session}/>
           {/* <CreatePostCard className='w-2/5'/> */}
         </div>
       </div>

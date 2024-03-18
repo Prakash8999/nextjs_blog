@@ -64,75 +64,70 @@ const Categories = ({ session }: any) => {
 			</button> */}
 
 			{/* Sidebar with Framer Motion animation */}
-			<motion.div
-				className={`w-[20vw] via-transparent  h-[80vh] shadow text-black rounded-lg relative ${showSidebar ? 'block' : 'hidden'}`}
-				initial="open"
-				animate={showSidebar ? 'open' : 'closed'}
-				variants={variants}
-			>
-				{/* <button className="text-white text-3xl absolute right-2 top-2" onClick={showButton}>
+
+			{/* <button className="text-white text-3xl absolute right-2 top-2" onClick={showButton}>
 					<RiMenuFoldLine />
 				</button> */}
 
-				<div className="flex flex-col pt-3 items-center h-full text-black pr-12 gap-y-3">
-					{/* Your category items */}
-					<button
-						onClick={() => {
-							params.delete('category');
-							replace(`${pathname}?${params.toString()}`);
-						}}
-						className="border-b border-gray-400 border-opacity-40 w-[100%] text-center py-2 text-xl cursor-pointer flex items-center justify-center gap-x-3">
-						<IoHomeOutline /> Home
-					</button>
-					<button onClick={() => {
-						searchCat('tech')
-					}} className={`    ${setTail == 'tech' ? 'border shadow-lg' : ''}  text-center py-2 w-44 px-2 rounded-md text-xl cursor-pointer   flex items-center justify-center gap-x-3`}>
-						<GrTechnology />Tech
-					</button>
+			<div className="flex  justify-center gap-x-4  text-white pb-2">
+				{/* Your category items */}
+				<button
+					onClick={() => {
+						params.delete('category');
+						replace(`${pathname}?${params.toString()}`);
+					}}
+					className=" border-gray-400 border-opacity-40   text-center py-1 text-xl cursor-pointer flex  gap-x-3">
+					<IoHomeOutline className='text-[#03DAB5]'/> Home
+				</button>
+				<button onClick={() => {
+					searchCat('tech')
+				}} className={`    ${setTail == 'tech' ? 'border shadow-lg text-opacity-100' : 'opacity-40'}  text-center py-1    px-2 rounded-md text-xl cursor-pointer   flex justify-center items-center gap-x-3`}>
+					<GrTechnology className='text-[#03DAB5]'/>Tech
+				</button>
 
-					<button
-						onClick={() => {
-							searchCat('health')
-						}}
-						className={`    ${setTail == 'health' ? 'border shadow-lg' : ''}  text-center py-2 w-44 px-2 rounded-md text-xl cursor-pointer   flex items-center justify-center gap-x-3`}>
-						<IoBodyOutline />	Health
-					</button>
-
-
-					<button
-						onClick={() => {
-							searchCat('space')
-						}}
-						className={`    ${setTail == 'space' ? 'border shadow-lg' : ''}  text-center py-2 w-44 px-2 rounded-md text-xl cursor-pointer   flex items-center justify-center gap-x-3`}>
-						<RiSpaceShipLine />Space
-					</button>
-
-					<button
-
-						onClick={() => {
-							searchCat('mysteries')
-						}}
-						className={`    ${setTail == 'mysteries' ? 'border shadow-lg' : ''}  text-center py-2 w-44 px-2 rounded-md text-xl cursor-pointer   flex items-center justify-center gap-x-3`}><RiGhostLine /> Mysteries</button>
-
-					<button onClick={() => {
-						searchCat('finance')
-					}} className={`    ${setTail == 'finance' ? 'border shadow-lg' : ''}  text-center py-2 w-44 px-2 rounded-md text-xl cursor-pointer   flex items-center justify-center gap-x-3`}>
-						<BsCurrencyRupee />	Finance
-					</button>
-
-					<button
-						onClick={() => {
-							searchCat('sports')
-						}}
-						className={`${setTail == 'sports' ? 'border shadow-lg' : ''}  text-center py-2 px-2 rounded-md text-xl cursor-pointer w-44    flex items-center justify-center gap-x-3`}>
-
-						<MdOutlineSportsBaseball />
-						Sports
-					</button>
+				<button
+					onClick={() => {
+						searchCat('health')
+					}}
+					className={`    ${setTail == 'health' ? 'border shadow-lg text-opacity-100' : 'opacity-40'}  text-center py-1  px-2 rounded-md text-xl cursor-pointer flex  justify-center items-center  gap-x-3`}>
+					<IoBodyOutline className='text-[#03DAB5]'/>	Health
+				</button>
 
 
+				<button
+					onClick={() => {
+						searchCat('space')
+					}}
+					className={`    ${setTail == 'space' ? 'border shadow-lg text-opacity-100' : 'opacity-40'}  text-center py-1  px-2 rounded-md text-xl cursor-pointer flex  justify-center items-center gap-x-3`}>
+					<RiSpaceShipLine className='text-[#03DAB5]'/>Space
+				</button>
 
-					<div className='relative mt-24 bottom-0 flex gap-x-3'>
+				<button
+
+					onClick={() => {
+						searchCat('mysteries')
+					}}
+					className={`    ${setTail == 'mysteries' ? 'border shadow-lg text-opacity-100' : 'opacity-40'}  text-center py-1  px-2 rounded-md text-xl cursor-pointer flex  justify-center items-center gap-x-3`}><RiGhostLine className='text-[#03DAB5]'/> Mysteries</button>
+
+				<button onClick={() => {
+					searchCat('finance')
+				}} className={`    ${setTail == 'finance' ? 'border shadow-lg text-opacity-100' : 'opacity-40'}  text-center py-1  px-2 rounded-md text-xl cursor-pointer flex justify-center  items-center gap-x-3`}>
+					<BsCurrencyRupee className='text-[#03DAB5]'/>	Finance
+				</button>
+
+				<button
+					onClick={() => {
+						searchCat('sports')
+					}}
+					className={`${setTail == 'sports' ? 'border shadow-lg text-opacity-100' : 'opacity-40'}  text-center py-1 px-2 rounded-md text-xl cursor-pointer  flex  justify-center w-36 items-center gap-x-3`}>
+
+					<MdOutlineSportsBaseball className='text-[#03DAB5]'/>
+					Sports
+				</button>
+
+
+
+				{/* <div className='relative mt-24 bottom-0 flex gap-x-3'>
 
 						<button
 							onClick={() => setShowMore(!showMore)}
@@ -156,14 +151,13 @@ const Categories = ({ session }: any) => {
 
 						</div>
 
-					</div>
-				</div>
+					</div> */}
+			</div>
 
-				<div className='fixed'>
+			<div className='fixed'>
 
-				</div>
+			</div>
 
-			</motion.div>
 
 		</>
 	);

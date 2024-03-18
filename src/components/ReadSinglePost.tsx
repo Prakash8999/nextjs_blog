@@ -85,7 +85,7 @@ const ReadSinglePost = ({ session }: any) => {
 			</div>
 
 
-			<div className='w-[55vw] min-h-screen h-full shadow-lg   bg-white  rounded-lg '>
+			<div className='w-[55vw] min-h-screen h-full  text-white border-2 border-[#03DAB5] shadow shadow-[#03DAB5] bg-[#182724]  rounded-lg '>
 				{
 					data?.post?.coverPhoto ? <div>
 

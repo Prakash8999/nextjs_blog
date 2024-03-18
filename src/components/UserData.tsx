@@ -27,20 +27,20 @@ const UserData = ({ user }: any) => {
 
 
 
-				<div className=" button flex items-center justify-between cursor-pointer border border-black px-2 py-1.5 rounded-md w-fit  " onClick={showMenu} >
+				<div className=" button flex items-center justify-between cursor-pointer border border-white px-2 py-1.5 rounded-md w-fit  " onClick={showMenu} >
 
 
 					<div className=' flex items-center gap-x-3'>
 
 						<UserAvatar user={user} />
 
-						<p className="font-semibold text-base">{user?.name}</p>
+						<p className="font-semibold text-base text-white capitalize">{user?.name}</p>
 
 
 					</div>
 
 					{
-						!show ? <IoIosArrowDown className='ml-2' /> : <IoIosArrowUp className='ml-2' />
+						!show ? <IoIosArrowDown className='ml-2 text-[#03DAB5]' /> : <IoIosArrowUp className='ml-2 text-[#03DAB5]' />
 
 
 					}
@@ -52,7 +52,7 @@ const UserData = ({ user }: any) => {
 				</div>
 
 
-				<div className={`${show ? 'absolute mt-16 shadow-md bg-[#19192B] text-white   rounded-md p-4 transition-transform' : 'hidden'}`}>
+				<div className={`${show ? 'absolute mt-16 shadow-md bg-[#182724] text-white   rounded-md p-4 transition-transform' : 'hidden'}`}>
 					<div className="flex flex-col gap-y-4 pt-2">
 						<div>
 

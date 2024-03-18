@@ -16,9 +16,9 @@ const [modal, setModal] = useState ({show:false})
 	{
 modal.show && <LoginModal data={modal.show} setModal={setModal} />
 	}
-	<button className='flex items-center ' onClick={()=>{
+	<button className='flex items-center text-white' onClick={()=>{
 		setModal({show:true})
-	}} > <IoAddOutline className = {'text-5xl ' } /> Write </button>
+	}} > <IoAddOutline className = {'text-5xl text-[#03DAB5]' } /> Write </button>
 	</>
 
   )

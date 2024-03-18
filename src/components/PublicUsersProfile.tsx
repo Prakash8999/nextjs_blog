@@ -72,7 +72,7 @@ const PublicUsersProfile = ({ userData, className, session }: { userData: any, c
 
 	return (
 		<>
-			<div className={`${className} bg-white h-[80vh] flex flex-col items-center pt-3  rounded-lg shadow-lg`}>
+			<div className={`${className} bg-[#182724] border-2 border-[#03DAB5] text-white h-[80vh] flex flex-col items-center pt-3  rounded-lg shadow-lg`}>
 
 				<Image title={userData?.author?.username} src={userData?.author?.image} alt='User Image' width={100} height={100} className='object-cover rounded-full' referrerPolicy='no-referrer' />
 				<p className='text-2xl font-semibold text-center mt-3'>{userData?.author?.name}</p>
@@ -95,7 +95,7 @@ const PublicUsersProfile = ({ userData, className, session }: { userData: any, c
 				</div>
 
 
-				<div className='mt-3 bg-gray-100 w-[80%] h-[25%] rounded-lg shadow-lg pt-3 flex flex-col gap-y-3'>
+				<div className='mt-3 bg-[#0C1615] w-[80%] h-[25%] rounded-lg shadow-lg pt-3 flex flex-col gap-y-3'>
 					<div className='flex gap-x-2 text-sm items-center pl-4 '>
 						<RiArticleLine />
 						<p> Posts Published: {userData?.author?.Post?.length}</p>

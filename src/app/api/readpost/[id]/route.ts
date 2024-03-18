@@ -4,6 +4,8 @@ import prisma from "@/lib/prismadb";
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
 	try {
 		const { id } = params
+
+		
 		const post = await prisma.post.findUnique({
 			where: {
 			
@@ -32,7 +34,9 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 
 // import { NextRequest, NextResponse } from "next/server";
 // import prisma from "../../../../../lib/prismadb";
+
 // import { redisClient } from "@/lib/redis";
+// import prisma from "@/lib/prismadb";
 
 // export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
 // 	try {
@@ -65,7 +69,7 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 // 		})
 // 		console.log('Database was queried');
 // 		let num = 0;
-// 		await redisClient.set(`singlepost:${num+1}`, JSON.stringify(post))
+// 		await redisClient.set(`singlepost`, JSON.stringify(post))
 // 		await redisClient.expire("singlepost", 30)
 
 

@@ -69,7 +69,7 @@ const UserPostDetails = ({ session }: any) => {
 
 			try {
 				const userId = userData?.author?.id
-				
+
 
 				if (isFollowing) {
 					axios(`/api/unfollow?userId=${userId}`, {
@@ -77,6 +77,7 @@ const UserPostDetails = ({ session }: any) => {
 
 					}).then((res) => {
 						console.log(res);
+
 
 					})
 						.catch((err) => {
@@ -108,7 +109,7 @@ const UserPostDetails = ({ session }: any) => {
 			Loading.......
 		</h1>
 	}
-	
+
 
 	return (
 		<>
@@ -197,221 +198,221 @@ const UserPostDetails = ({ session }: any) => {
 					}
 
 
-{
-	getPostPublishedorDraft == 'draft' ? <Draft userId={session?.user?.id}/> : 	getPostPublishedorDraft == 'published' ? <div>
-		{
-						isLoading ? < Skeleton count={5} baseColor='white' height={100} className='mb-5 rounded-lg' /> :
-							userData?.author?.Post?.map((post: any, index: number) => {
-								return <div key={index} className={` relative bg-white flex  flex-col h-fit overflow-hidden   mb-4 p-4 rounded-xl shadow`}>
-									<div className='flex gap-x-3 w-fit'>
-										<Image src={userData?.author?.image} alt='User Image' width={36} height={36} className='object-cover rounded-full' referrerPolicy='no-referrer' />
-										<div className='flex   -space-y-1 justify-between w-[45vw]'>
-											<div>
+					{
+						getPostPublishedorDraft == 'draft' ? <Draft userId={session?.user?.id} /> : getPostPublishedorDraft == 'published' ? <div>
+							{
+								isLoading ? < Skeleton count={5} baseColor='white' height={100} className='mb-5 rounded-lg' /> :
+									userData?.author?.Post?.map((post: any, index: number) => {
+										return <div key={index} className={` relative bg-white flex  flex-col h-fit overflow-hidden   mb-4 p-4 rounded-xl shadow`}>
+											<div className='flex gap-x-3 w-fit'>
+												<Image src={userData?.author?.image} alt='User Image' width={36} height={36} className='object-cover rounded-full' referrerPolicy='no-referrer' />
+												<div className='flex   -space-y-1 justify-between w-[45vw]'>
+													<div>
 
-												<p className='text-sm text-black font-semibold '> {userData.author?.username}
+														<p className='text-sm text-black font-semibold '> {userData.author?.username}
 
 
-												</p>
-												<p className='text-sm'>
+														</p>
+														<p className='text-sm'>
+
+															{
+																// @ts-ignore
+																dayjs(post?.createdAt).format('DD/MM/YY')
+															}
+														</p>
+													</div>
 
 													{
-														// @ts-ignore
-														dayjs(post?.createdAt).format('DD/MM/YY')
+														session?.user.id == userData?.author?.id ? <button className='text-3xl'>
+															<Link href={`/edit/${post?.id}`}>
+																<CiEdit />
+															</Link>
+
+														</button> : null
 													}
-												</p>
+												</div>
+
 											</div>
 
-											{
-												session?.user.id == userData?.author?.id ? <button className='text-3xl'>
-													<Link href={`/edit/${post?.id}`}>
-														<CiEdit />
-													</Link>
+											<div>
+												{!post?.coverPhoto ?
+													<div className='mt-4'>
 
-												</button> : null
-											}
+														<Link className='' href={`/read/${post?.id}`}>
+															<h2 className='font-semibold text-xl '>{post?.title}</h2>
+
+														</Link>
+
+
+														<div className='flex justify-between pt-2 '>
+															<div className='flex   gap-x-10'>
+
+																<button >
+																	<AiOutlineLike className='text-2xl' />
+																</button>
+
+
+																<button>
+																	<FaRegComments className='text-2xl' />
+																</button>
+															</div>
+
+
+															<button title='save'>
+																<IoSaveOutline className='text-2xl' />
+															</button>
+														</div>
+													</div>
+
+													: <div className='mt-4'>
+
+														<Link className='' href={`/read/${post?.id}`}>
+
+															<Image alt='cover photo' src={post?.coverPhoto} width={1000} height={600} className=' h-[50vh] object-cover rounded-lg shadow-lg' priority />
+															<h2 className='font-semibold text-xl mt-2'>{post?.title}</h2>
+														</Link>
+
+														<div className='flex justify-between pt-2 '>
+															<div className='flex   gap-x-10'>
+
+																<button >
+																	<AiOutlineLike className='text-2xl' />
+																</button>
+
+
+																<button >
+																	<FaRegComments className='text-2xl' />
+																</button>
+															</div>
+
+
+															<button title='save'>
+																<IoSaveOutline className='text-2xl' />
+															</button>
+														</div>
+													</div>}
+
+
+											</div>
+
+
+											{/* <div className='absolute bottom-0 left-0 h-16 w-full bg-gradient-to-t from-white to-transparent'></div> */}
 										</div>
 
-									</div>
+									})
 
-									<div>
-										{!post?.coverPhoto ?
-											<div className='mt-4'>
+							}
 
-												<Link className='' href={`/read/${post?.id}`}>
-													<h2 className='font-semibold text-xl '>{post?.title}</h2>
+						</div> : <div>
+							{
+								isLoading ? < Skeleton count={5} baseColor='white' height={100} className='mb-5 rounded-lg' /> :
+									userData?.author?.Post?.map((post: any, index: number) => {
+										return <div key={index} className={` relative bg-white flex  flex-col h-fit overflow-hidden   mb-4 p-4 rounded-xl shadow`}>
+											<div className='flex gap-x-3 w-fit'>
+												<Image src={userData?.author?.image} alt='User Image' width={36} height={36} className='object-cover rounded-full' referrerPolicy='no-referrer' />
+												<div className='flex   -space-y-1 justify-between w-[45vw]'>
+													<div>
 
-												</Link>
-
-
-												<div className='flex justify-between pt-2 '>
-													<div className='flex   gap-x-10'>
-
-														<button >
-															<AiOutlineLike className='text-2xl' />
-														</button>
+														<p className='text-sm text-black font-semibold '> {userData.author?.username}
 
 
-														<button>
-															<FaRegComments className='text-2xl' />
-														</button>
+														</p>
+														<p className='text-sm'>
+
+															{
+																// @ts-ignore
+																dayjs(post?.createdAt).format('DD/MM/YY')
+															}
+														</p>
 													</div>
-
-
-													<button title='save'>
-														<IoSaveOutline className='text-2xl' />
-													</button>
-												</div>
-											</div>
-
-											: <div className='mt-4'>
-
-												<Link className='' href={`/read/${post?.id}`}>
-
-													<Image alt='cover photo' src={post?.coverPhoto} width={1000} height={600} className=' h-[50vh] object-cover rounded-lg shadow-lg' priority />
-													<h2 className='font-semibold text-xl mt-2'>{post?.title}</h2>
-												</Link>
-
-												<div className='flex justify-between pt-2 '>
-													<div className='flex   gap-x-10'>
-
-														<button >
-															<AiOutlineLike className='text-2xl' />
-														</button>
-
-
-														<button >
-															<FaRegComments className='text-2xl' />
-														</button>
-													</div>
-
-
-													<button title='save'>
-														<IoSaveOutline className='text-2xl' />
-													</button>
-												</div>
-											</div>}
-
-
-									</div>
-
-
-									{/* <div className='absolute bottom-0 left-0 h-16 w-full bg-gradient-to-t from-white to-transparent'></div> */}
-								</div>
-
-							})
-
-					}
-
-	</div> : <div>
-	{
-						isLoading ? < Skeleton count={5} baseColor='white' height={100} className='mb-5 rounded-lg' /> :
-							userData?.author?.Post?.map((post: any, index: number) => {
-								return <div key={index} className={` relative bg-white flex  flex-col h-fit overflow-hidden   mb-4 p-4 rounded-xl shadow`}>
-									<div className='flex gap-x-3 w-fit'>
-										<Image src={userData?.author?.image} alt='User Image' width={36} height={36} className='object-cover rounded-full' referrerPolicy='no-referrer' />
-										<div className='flex   -space-y-1 justify-between w-[45vw]'>
-											<div>
-
-												<p className='text-sm text-black font-semibold '> {userData.author?.username}
-
-
-												</p>
-												<p className='text-sm'>
 
 													{
-														// @ts-ignore
-														dayjs(post?.createdAt).format('DD/MM/YY')
+														session?.user.id == userData?.author?.id ? <button className='text-3xl'>
+															<Link href={`/edit/${post?.id}`}>
+																<CiEdit />
+															</Link>
+
+														</button> : null
 													}
-												</p>
+												</div>
+
 											</div>
 
-											{
-												session?.user.id == userData?.author?.id ? <button className='text-3xl'>
-													<Link href={`/edit/${post?.id}`}>
-														<CiEdit />
-													</Link>
+											<div>
+												{!post?.coverPhoto ?
+													<div className='mt-4'>
 
-												</button> : null
-											}
+														<Link className='' href={`/read/${post?.id}`}>
+															<h2 className='font-semibold text-xl '>{post?.title}</h2>
+
+														</Link>
+
+
+														<div className='flex justify-between pt-2 '>
+															<div className='flex   gap-x-10'>
+
+																<button >
+																	<AiOutlineLike className='text-2xl' />
+																</button>
+
+
+																<button>
+																	<FaRegComments className='text-2xl' />
+																</button>
+															</div>
+
+
+															<button title='save'>
+																<IoSaveOutline className='text-2xl' />
+															</button>
+														</div>
+													</div>
+
+													: <div className='mt-4'>
+
+														<Link className='' href={`/read/${post?.id}`}>
+
+															<Image alt='cover photo' src={post?.coverPhoto} width={1000} height={600} className=' h-[50vh] object-cover rounded-lg shadow-lg' priority />
+															<h2 className='font-semibold text-xl mt-2'>{post?.title}</h2>
+														</Link>
+
+														<div className='flex justify-between pt-2 '>
+															<div className='flex   gap-x-10'>
+
+																<button >
+																	<AiOutlineLike className='text-2xl' />
+																</button>
+
+
+																<button >
+																	<FaRegComments className='text-2xl' />
+																</button>
+															</div>
+
+
+															<button title='save'>
+																<IoSaveOutline className='text-2xl' />
+															</button>
+														</div>
+													</div>}
+
+
+											</div>
+
+
+											{/* <div className='absolute bottom-0 left-0 h-16 w-full bg-gradient-to-t from-white to-transparent'></div> */}
 										</div>
 
-									</div>
+									})
 
-									<div>
-										{!post?.coverPhoto ?
-											<div className='mt-4'>
+							}
 
-												<Link className='' href={`/read/${post?.id}`}>
-													<h2 className='font-semibold text-xl '>{post?.title}</h2>
-
-												</Link>
-
-
-												<div className='flex justify-between pt-2 '>
-													<div className='flex   gap-x-10'>
-
-														<button >
-															<AiOutlineLike className='text-2xl' />
-														</button>
-
-
-														<button>
-															<FaRegComments className='text-2xl' />
-														</button>
-													</div>
-
-
-													<button title='save'>
-														<IoSaveOutline className='text-2xl' />
-													</button>
-												</div>
-											</div>
-
-											: <div className='mt-4'>
-
-												<Link className='' href={`/read/${post?.id}`}>
-
-													<Image alt='cover photo' src={post?.coverPhoto} width={1000} height={600} className=' h-[50vh] object-cover rounded-lg shadow-lg' priority />
-													<h2 className='font-semibold text-xl mt-2'>{post?.title}</h2>
-												</Link>
-
-												<div className='flex justify-between pt-2 '>
-													<div className='flex   gap-x-10'>
-
-														<button >
-															<AiOutlineLike className='text-2xl' />
-														</button>
-
-
-														<button >
-															<FaRegComments className='text-2xl' />
-														</button>
-													</div>
-
-
-													<button title='save'>
-														<IoSaveOutline className='text-2xl' />
-													</button>
-												</div>
-											</div>}
-
-
-									</div>
-
-
-									{/* <div className='absolute bottom-0 left-0 h-16 w-full bg-gradient-to-t from-white to-transparent'></div> */}
-								</div>
-
-							})
-
+						</div>
 					}
 
-	</div>
-}
 
 
 
-					
 
 
 				</div>

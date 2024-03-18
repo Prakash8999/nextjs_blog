@@ -52,7 +52,7 @@ const SignIn = () => {
 	return (
 		<>
 			<div className='container mx-auto flex flex-col w-fit justify-center px-10 gap-y-4 h-full '>
-				<FaChrome className='h-5 w-5 md:h-10 md:w-10  ' />
+				<FaChrome className='h-5 w-5 md:h-10 md:w-10 text-[#03DAB5] ' />
 				<h1 className='text-2xl font-semibold '> Welcome Back</h1>
 
 				<p className='text-sm max-w-xs '>By continuing, you are setting up a Redlone account and agree to our User Agreement and Privacy Policy</p>

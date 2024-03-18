@@ -52,108 +52,19 @@ console.log(data);
 		<>
 
 
-			<div className={`${className} h-fit `}>
+			<div className={` h-fit flex flex-col   `}>
 
 				{
-					isLoading ? < Skeleton count={5} baseColor='white' height={100} className='mb-5 rounded-lg' /> :
+					isLoading ? < Skeleton count={5} baseColor='#182724' height={100} className='mb-5 rounded-lg' /> :
 
-						// category ? data?.post?.filter((data: any) => data?.category == category && data?.publish).map((post: any, index: number) => {
-						// 	return <div key={index} className={` relative bg-white flex  flex-col h-fit overflow-hidden   mb-4 p-4 rounded-xl shadow`}>
-						// 		<Link href={`/user/${post?.author?.username}`} className='flex gap-x-3 w-fit'>
-						// 			<Image src={post?.author?.image} alt='User Image' width={36} height={36} className='object-cover rounded-full' referrerPolicy='no-referrer' />
-						// 			<div className='flex flex-col -space-y-1'>
-
-						// 				<p className='text-sm text-black font-semibold '> {post?.author?.username}
-
-						// 				</p>
-						// 				<p className='text-sm'>
-
-						// 					{
-						// 						// @ts-ignore
-						// 						dayjs(post?.createdAt).format('DD/MM/YY')
-						// 					}
-						// 				</p>
-						// 			</div>
-
-						// 		</Link>
-
-						// 		<div>
-						// 			{!post?.coverPhoto ?
-						// 				<div className='mt-4'>
-
-						// 					<Link className='' href={`/read/${post?.id}`}>
-						// 						<h2 className='font-semibold text-xl '>{post?.title}</h2>
-
-						// 					</Link>
-
-						// 					<div className='py-2'>
-
-						// 						{post?.tags?.split(",").map((val: any) => "#" + val + " , ")}
-						// 					</div>
-						// 					<div className='flex justify-between pt-2 '>
-						// 						<div className='flex   gap-x-10'>
-
-						// 							<button >
-						// 								<AiOutlineLike className='text-2xl' />
-						// 							</button>
-
-
-						// 							<button>
-						// 								<FaRegComments className='text-2xl' />
-						// 							</button>
-						// 						</div>
-
-
-						// 						<button title='save'>
-						// 							<IoSaveOutline className='text-2xl' />
-						// 						</button>
-						// 					</div>
-						// 				</div>
-
-						// 				: <div className='mt-4'>
-
-						// 					<Link className='' href={`/read/${post?.id}`}>
-
-						// 						<Image alt='cover photo' src={post?.coverPhoto} width={1000} height={600} className=' h-[50vh] object-cover rounded-lg shadow-lg' priority />
-						// 						<h2 className='font-semibold text-xl mt-2'>{post?.title}</h2>
-						// 					</Link>
-
-						// 					<div className='flex justify-between pt-2 '>
-						// 						<div className='flex   gap-x-10'>
-
-						// 							<button >
-						// 								<AiOutlineLike className='text-2xl' />
-						// 							</button>
-
-
-						// 							<button >
-						// 								<FaRegComments className='text-2xl' />
-						// 							</button>
-						// 						</div>
-
-
-						// 						<button title='save'>
-						// 							<IoSaveOutline className='text-2xl' />
-						// 						</button>
-						// 					</div>
-						// 				</div>}
-
-
-						// 		</div>
-
-
-						// 		{/* <div className='absolute bottom-0 left-0 h-16 w-full bg-gradient-to-t from-white to-transparent'></div> */}
-						// 	</div>
-
-						// }) :
 
 						data?.post?.filter((data: any) => category != null ? data.category == category : data).map((post: any, index: number) => {
-							return <div key={index} className={` relative bg-white flex  flex-col h-fit overflow-hidden   mb-4 p-4 rounded-xl shadow`}>
-								<Link href={`/user/${post?.author?.username}`} className='flex gap-x-3 w-fit'>
+							return <div key={index} className={` relative bg-[#182724] text-white border-2 border-[#03DAB5]  justify-center  flex  flex-col h-fit overflow-hidden  w-full mb-4 p-4 rounded-xl shadow shadow-[#03DAB5]`}>
+								<Link href={`/user/${post?.author?.username}`} className='flex gap-x-3 w-fit text-white'>
 									<Image src={post?.author?.image} alt='User Image' width={36} height={36} className='object-cover rounded-full' referrerPolicy='no-referrer' />
 									<div className='flex flex-col -space-y-1'>
 
-										<p className='text-sm text-black font-semibold '> {post?.author?.username}
+										<p className='text-sm  font-semibold '> {post?.author?.username}
 
 										</p>
 										<p className='text-sm'>

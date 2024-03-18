@@ -17,7 +17,7 @@ modal.show && <LoginModal data={modal.show} setModal={setModal} />
 	}
 	<button onClick={()=>{
 		setModal({show:true})
-	}} className='bg-black bg-opacity-90 text-white px-7 py-2 shadow hover:shadow-lg rounded-3xl '>Sign In</button>
+	}} className='bg-black bg-opacity-90 text-white px-7 py-2 shadow hover:shadow-lg rounded-3xl border border-white'>Sign In</button>
 	</>
 
   )

@@ -12,7 +12,7 @@ const Read =async () => {
 	return (
 		<>
 			{/* <App/> */}
-			<div className='flex justify-center gap-x-20 py-8  bg-gray-100  px-20'>
+			<div className='flex justify-center gap-x-20 py-8  bg-[#0C1615]  px-20'>
 				<ReadSinglePost session = {session}/>
 
 			</div>

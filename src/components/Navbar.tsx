@@ -24,13 +24,13 @@ const Navbar =  ({session}:any) => {
 
     <>
 
-      <div className='fixed top-0 inset-x-0 h-fit bg-zinc-200 border-b border-zinc-300 z-[10] py-2 '>
+      <div className='fixed top-0 inset-x-0 h-fit bg-[#182724] border-b border-zinc-300 z-[10] py-2 '>
         <div className='h-full container w-full px-10  flex items-center justify-between gap-2'>
           <Link href={'/'} className='flex gap-x-4 items-center'>
 
 
-            <FaChrome className='h-5 w-5 md:h-7 md:w-7 text-red-400' />
-            <p className='hidden md:block text-zinc-700 text-sm font-medium '>Redlone </p>
+            <FaChrome className='h-5 w-5 md:h-7 md:w-7 text-[#03DAB5]' />
+            <p className='hidden md:block text-white text-lg font-medium '>Redlone </p>
 
           </Link>
 
@@ -54,8 +54,8 @@ const Navbar =  ({session}:any) => {
 
               session ? <Link href={'/create'}>
 
-                <IoAddOutline className={'text-5xl '} />
-              </Link> : <SigninModalButtonPlusIcon />
+                <IoAddOutline className={'text-5xl text-[#03DAB5]'} />
+              </Link> : <SigninModalButtonPlusIcon  />
             }
 
 
