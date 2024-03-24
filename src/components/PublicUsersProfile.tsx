@@ -9,8 +9,9 @@ import { GrLocation } from 'react-icons/gr'
 import { RiArticleLine, RiUserFollowLine } from 'react-icons/ri'
 import { Toaster, toast } from 'sonner'
 
-const PublicUsersProfile = ({ userData, className, session, fetchData, followerCount, postCount }: { userData: any, className: string, session: any, fetchData: any, followerCount: number , postCount:number}) => {
+const PublicUsersProfile = ({ userData, className, session, fetchData, followerCount, postCount }: { userData: any, className: string, session: any, fetchData: any, followerCount: number, postCount: number }) => {
 	const [loading, setLoading] = useState(false)
+	const[checkIsFollowing, setCheckIsFollowing] = useState(false)
 	const isFollowing = useMemo(() => {
 		const list = session?.user.followingIds || [];
 
@@ -42,7 +43,8 @@ const PublicUsersProfile = ({ userData, className, session, fetchData, followerC
 					}).then((res) => {
 						console.log(res);
 						setLoading(false)
-						fetchData
+
+						
 					})
 						.catch((err) => {
 							console.log(err);
@@ -59,6 +61,7 @@ const PublicUsersProfile = ({ userData, className, session, fetchData, followerC
 					}).then((res) => {
 						setLoading(false)
 						fetchData()
+					
 						console.log(res);
 					})
 
@@ -105,7 +108,7 @@ const PublicUsersProfile = ({ userData, className, session, fetchData, followerC
 					</div>
 
 
-					
+
 
 					<div className='flex gap-x-2 text-sm items-center pl-4 '>
 						<GrLocation />
@@ -124,11 +127,16 @@ const PublicUsersProfile = ({ userData, className, session, fetchData, followerC
 
 					<button
 						disabled={loading}
-						onClick={handleFollow} className={`${isFollowing ? 'bg-gray-400 opacity-50' : 'bg-blue-600 '} px-4 py-2 text-white rounded-md text-xl`}>
-						{
-							session?.user.id == userData?.author?.id ? 'Edit' : isFollowing ? 'Unfollow' : 'Follow'
-						}
+						onClick={handleFollow}
+						className={`${isFollowing ? 'bg-gray-400 opacity-50' : 'bg-blue-600 '} px-4 py-2 text-white rounded-md text-xl`}
+					>
+						{session?.user.id === userData?.author?.id
+							? 'Edit'
+							: isFollowing
+								? 'Unfollow'
+								: 'Follow'}
 					</button>
+
 				</div>
 
 			</div>

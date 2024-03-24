@@ -16,7 +16,7 @@ import { FaRegComments } from "react-icons/fa";
 dayjs.extend(relativeTime);
 
 interface PostData {
-	followerCount:number,
+	followerCount: number,
 	postCount: number,
 	post: {
 		id: string;
@@ -62,7 +62,7 @@ const ReadSinglePost = ({ session }: any) => {
 	useEffect(() => {
 		fetchData()
 
-		
+
 	}, [])
 
 	// const { data, isError, isLoading } = useQuery({ queryKey: ['singlepost'], queryFn: fetchData })
@@ -158,13 +158,13 @@ const ReadSinglePost = ({ session }: any) => {
 		}
 	}
 	// console.log(data);
-	
+
 
 	return (
 		<>
 			<div className='w-fit '>
 
-				<PublicUsersProfile userData={data?.post} fetchData = {fetchData} followerCount={data?.followerCount || 0} postCount ={data?.postCount || 0} className={"w-[25vw] "} session={session} />
+				<PublicUsersProfile userData={data?.post} fetchData={fetchData} followerCount={data?.followerCount || 0} postCount={data?.postCount || 0} className={"w-[25vw] "} session={session} />
 			</div>
 
 
@@ -207,20 +207,22 @@ const ReadSinglePost = ({ session }: any) => {
 									<div className='flex gap-x-1 items-center'>
 
 
-										<p className='text-sm '>
-											Posted
-										</p>
-										<p>
-											{
-												// @ts-ignore
 
-												dayjs(data?.post?.createdAt).toNow()
+										<div className='flex items-center gap-x-1'>
 
+											<p>
+												{
+													// @ts-ignore
+													dayjs(data?.post?.createdAt).toNow()
 
+													// dayjs().to(dayjs(data?.post?.createdAt)) // "31 years ago"
+												}
+											</p>
 
-												// dayjs().to(dayjs(data?.post?.createdAt)) // "31 years ago"
-											}
-										</p>
+											<p>
+												Ago
+											</p>
+										</div>
 									</div>
 
 								</div>
@@ -282,12 +284,12 @@ const ReadSinglePost = ({ session }: any) => {
 
 				</div>
 				<div className='w-[55vw] min-h-[30vh] bg-[#182724] mt-5 h-fit  text-white border-2 border-[#03DAB5] shadow shadow-[#03DAB5]   rounded-lg  flex flex-col gap-y-4'>
-					<div className='pt-2 relative px-6'>
-						<input type="text" placeholder='Add a Comment' value={comments} className=' w-full p-2  pl-2 text-sm text-white  border-b border-white  bg-transparent focus:ring-blue-500 outline-none' onChange={(e) => {
+					<div className='pt-3 relative px-6'>
+						<input type="text" placeholder='Add a Comment' value={comments} className=' w-full p-2  pl-1 pr-24 text-sm text-white  border-b border-white  bg-transparent focus:ring-blue-500 outline-none' onChange={(e) => {
 							setComments(e.target.value)
 						}} />
 
-						<button onClick={handleComment} className='absolute right-10 top-12 bg-[#0C1615] py-1 px-3 rounded-md'>Comment</button>
+						<button onClick={handleComment} className='absolute right-6 top-2 bg-[#0C1615] py-1 px-2 rounded-md'>Comment</button>
 					</div>
 
 

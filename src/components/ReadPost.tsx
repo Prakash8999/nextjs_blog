@@ -19,6 +19,7 @@ import { BsGithub, BsLinkedin } from 'react-icons/bs'
 import { RiArticleLine, RiUserFollowLine } from 'react-icons/ri'
 import { GrLocation } from 'react-icons/gr'
 import SigninModalButton from './SigninModalButton'
+import { BiSolidLike } from 'react-icons/bi'
 
 const fetchPost = async () => {
 	const { data } = await axios.get('/api/readpost')
@@ -252,7 +253,7 @@ const ReadPost = ({ className, session }: cn) => {
 														{/* <Like postId={post?.id} currentUserId={session?.user?.id} /> */}
 
 
-														<AiOutlineLike className='text-2xl' />
+														<BiSolidLike className='text-2xl' />
 														{post?.likedIds?.length} likes
 
 														<button>
@@ -278,7 +279,7 @@ const ReadPost = ({ className, session }: cn) => {
 														<div className='flex   gap-x-10'>
 
 															<button className='flex items-center gap-x-2 justify-center' >
-																<AiOutlineLike className='text-2xl' />
+																<BiSolidLike className='text-2xl' />
 																{post?.likedIds?.length} likes
 															</button>
 
