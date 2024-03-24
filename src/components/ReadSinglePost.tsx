@@ -316,7 +316,7 @@ const ReadSinglePost = ({ session }: any) => {
 					</div>
 				</div>
 			</div>
-			<Toaster />
+			<Toaster richColors position='top-center'/>
 
 		</>
 	)

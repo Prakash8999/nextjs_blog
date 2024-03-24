@@ -140,7 +140,7 @@ const PublicUsersProfile = ({ userData, className, session, fetchData, followerC
 				</div>
 
 			</div>
-			<Toaster />
+			<Toaster richColors position='top-center'/>
 
 
 		</>
