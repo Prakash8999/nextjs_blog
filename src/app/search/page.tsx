@@ -109,17 +109,17 @@ const SearchPost = () => {
     <>
 
 
-      <div className={`  bg-gray-100 min-h-screen flex flex-col  items-center h-full pt-5`}>
+      <div className={`  bg-[#0C1615] min-h-screen flex flex-col  items-center h-full pt-5`}>
 
         {
           isLoading ? < Skeleton count={5} baseColor='white' height={100} className='mb-5 rounded-lg' /> :
             data?.map((post: any, index: number) => {
-              return <div key={index} className={` relative bg-white flex  flex-col h-fit overflow-hidden  w-[60vw]  mb-4 p-4 rounded-xl shadow`}>
+              return <div key={index} className={` relative bg-[#182724] flex text-white  flex-col h-fit overflow-hidden  w-[50vw]  mb-4 p-4 rounded-xl shadow`}>
                 <Link href={`/user/${post?.author?.username}`} className='flex gap-x-3 w-fit'>
                   <Image src={post?.author?.image} alt='User Image' width={36} height={36} className='object-cover rounded-full' referrerPolicy='no-referrer' />
                   <div className='flex flex-col -space-y-1'>
 
-                    <p className='text-sm text-black font-semibold '> {post?.author?.username}
+                    <p className='text-sm text-white font-semibold '> {post?.author?.username}
 
                     </p>
                     <p className='text-sm'>
@@ -170,9 +170,8 @@ const SearchPost = () => {
 
                       <Link className='' href={`/read/${post?.id}`}>
 
-                        <Image alt='cover photo' src={post?.coverPhoto} width={1000} height={600} className=' h-[50vh] object-cover rounded-lg shadow-lg' priority />
+                        <Image alt='cover photo' src={post?.coverPhoto} width={750} height={500} className=' h-[50vh] object-cover rounded-lg shadow-lg' priority />
                         <h2 className='font-semibold text-xl mt-2'>{post?.title}</h2>
-                      </Link>
 
                       <div className='flex justify-between pt-2 '>
                         <div className='flex   gap-x-10'>
@@ -192,6 +191,7 @@ const SearchPost = () => {
                           <IoSaveOutline className='text-2xl' />
                         </button>
                       </div>
+                      </Link>
                     </div>}
 
 

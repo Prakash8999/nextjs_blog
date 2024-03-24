@@ -31,9 +31,15 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 				github: true,
 				linkedin: true,
 				id: true,
-				Post: true,
+				Post: {
+					include: {
+						Comment: true
+					}
+				},
+
 			}
 		})
+
 		return NextResponse.json({ message: "userfeeetched", author, followerCount })
 	} catch (error) {
 		return NextResponse.json(error)

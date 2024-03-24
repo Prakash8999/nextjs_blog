@@ -251,7 +251,7 @@ export const Create = () => {
       draft: true,
       coverPhoto: cover,
       tags: tags,
-      category:category
+      category: category
     }
 
     createDraft(payload)
@@ -399,8 +399,57 @@ export const Create = () => {
         </div>
       </form>
 
-      <div className='w-1/4 bg-white h-[50vh] rounded-lg p-5'>
-        Idk what to add here
+      <div className='w-1/4 bg-white h-[50vh] rounded-lg p-5 text-sm flex flex-col gap-y-3'>
+        <div className='flex items-center gap-x-1'>
+          <p className='font-semibold'>
+            Clarity:
+          </p>
+          Be clear and concise in your message.
+        </div>
+        <div className='flex items-center gap-x-1'>
+          <p className='font-semibold'>
+          Relevance:
+          </p>
+          Include all relevant information.
+        </div>
+
+
+        <div className='flex items-center gap-x-1'>
+          <p className='font-semibold'>
+            Formatting:
+          </p>
+          Use proper formatting for readability.
+        </div>
+
+        <div className='flex items-center gap-x-1'>
+          <p className='font-semibold'>
+          Grammar: 
+          </p>
+          Check for spelling and grammar errors.
+        </div>
+
+        <div className='flex items-center gap-x-1'>
+          <p className='font-semibold'>
+          Vulgarity: 
+          </p>
+          Avoid using vulgar language or content.
+        </div>
+        <div className='flex items-center gap-x-1'>
+          <p className='font-semibold'>
+          Respect: 
+          </p>
+          Be respectful and courteous in your communication.
+        </div>
+
+
+        
+        
+
+<p className='mt-5 font-extrabold text-lg text-center'>
+By  Redlone
+</p>
+        
+
       </div>
 
       <Toaster richColors position='top-center' />

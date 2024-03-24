@@ -77,6 +77,7 @@ model User {
   Following     Following[]
   PostCount     Int?
   followingIds  String[]    @db.ObjectId
+  Comment       Comment[]
 
   @@unique([email, id])
 }
@@ -114,15 +115,29 @@ model Post {
   // author User    @relation(fields: [authorEmail, authorId], references: [email, id])
 
   // authorEmail
-  author     User     @relation(fields: [authorId], references: [id])
-  authorId   String   @db.ObjectId
+  author     User      @relation(fields: [authorId], references: [id])
+  authorId   String    @db.ObjectId
   coverPhoto String?
   summary    String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  publish    Boolean? @default(true)
-  draft      Boolean? @default(false)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  publish    Boolean?  @default(true)
+  draft      Boolean?  @default(false)
   tags       String?
-  likedIds   String[] @db.ObjectId
+  likedIds   String[]  @db.ObjectId
   category   String?
+  Comment    Comment[]
+}
+
+model Comment {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  body             String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  author           User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId         String   @db.ObjectId
+  postId           String   @db.ObjectId
+  commentUsername  String?
+  commentUserPhoto String?
+  post             Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
 }

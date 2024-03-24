@@ -89,7 +89,7 @@ const Profile = ({ session }: user) => {
 	return (
 		<>
 			<div className='flex pb-5 flex-col items-center  gap-y-6 '>
-				<div className='mt-4 bg-white p-4  rounded-md w-[55vw] h-full px-8 '>
+				<div className='mt-4 bg-[#182724] p-4  rounded-md w-[55vw] h-full px-8 '>
 					<p className='font-semibold text-xl'>
 						User Detail
 					</p>
@@ -110,7 +110,7 @@ const Profile = ({ session }: user) => {
 						<div className='flex flex-col gap-y-2'>
 
 							<label htmlFor="user">Name</label>
-							<input type="text" value={session?.user?.name} disabled={true} className='h-11 outline-none border pl-2 rounded-lg' placeholder='Bruce Wayne' />
+							<input type="text" value={session?.user?.name} disabled={true} className='h-11 outline-none border pl-2 rounded-lg placeholder:opacity-60  placeholder:text-white bg-[#0C1615] ' placeholder='Bruce Wayne' />
 						</div>
 
 
@@ -119,13 +119,13 @@ const Profile = ({ session }: user) => {
 							<label htmlFor="user">UserName</label>
 							<input type="text" value={username} disabled={!isEditable} onChange={(e) => {
 								setUserName(e.target.value)
-							}} className='h-11 outline-none border pl-2 rounded-lg' placeholder='thebruce' />
+							}} className='h-11 outline-none border pl-2 rounded-lg bg-[#0C1615] placeholder:text-white ' placeholder='thebruce' />
 						</div>
 
 						<div className='flex flex-col gap-y-2'>
 
 							<label htmlFor="user">Email</label>
-							<input type="text" value={session?.user?.email} disabled={true} className='h-11 outline-none border pl-2 rounded-lg' placeholder='brucewayne1939@gmail.com' />
+							<input type="text" value={session?.user?.email} disabled={true} className='h-11 outline-none border pl-2 rounded-lg bg-[#0C1615] placeholder:text-white' placeholder='brucewayne1939@gmail.com' />
 						</div>
 
 
@@ -133,7 +133,7 @@ const Profile = ({ session }: user) => {
 				</div>
 
 
-				<div className='mt-4 bg-white p-4  rounded-md w-[55vw] h-full px-8 '>
+				<div className='mt-4 bg-[#182724] p-4  rounded-md w-[55vw] h-full px-8 '>
 					<p className='font-semibold text-xl'>
 						Url
 					</p>
@@ -144,14 +144,14 @@ const Profile = ({ session }: user) => {
 							<label htmlFor="user">Website</label>
 							<input type="text" value={website} disabled={!isEditable} onChange={(e) => {
 								setWebsite(e.target.value)
-							}} className='h-11 outline-none border pl-2 rounded-lg' placeholder='..' />
+							}} className='h-11 outline-none border pl-2 rounded-lg bg-[#0C1615] placeholder:text-white placeholder:opacity-60' placeholder='..' />
 						</div>
 
 
 						<div className='flex flex-col gap-y-2'>
 
 							<label htmlFor="user">Linkedin</label>
-							<input type="text" value={linkedin} disabled={!isEditable} onChange={e => setLinkedin(e.target.value)} className='h-11 outline-none border pl-2 rounded-lg' placeholder='..' />
+							<input type="text" value={linkedin} disabled={!isEditable} onChange={e => setLinkedin(e.target.value)} className='h-11 outline-none border pl-2 rounded-lg bg-[#0C1615] placeholder:text-white placeholder:opacity-60' placeholder='..' />
 						</div>
 
 
@@ -160,7 +160,7 @@ const Profile = ({ session }: user) => {
 							<label htmlFor="user">Github</label>
 							<input type="text" value={github} disabled={!isEditable} onChange={(e) => {
 								setGitHub(e.target.value)
-							}} className='h-11 outline-none border pl-2 rounded-lg' placeholder='..' />
+							}} className='h-11 outline-none border pl-2 rounded-lg bg-[#0C1615] placeholder:text-white placeholder:opacity-60' placeholder='..' />
 						</div>
 
 
@@ -168,7 +168,7 @@ const Profile = ({ session }: user) => {
 					</div>
 				</div>
 
-				<div className='mt-4 bg-white p-4  rounded-md w-[55vw] h-full px-8 '>
+				<div className='mt-4 bg-[#182724] p-4  rounded-md w-[55vw] h-full px-8 '>
 					<p className='font-semibold text-xl'>
 						About Yourself
 					</p>
@@ -179,7 +179,7 @@ const Profile = ({ session }: user) => {
 							<label htmlFor="user">Bio</label>
 							<textarea value={bio} disabled={!isEditable} maxLength={300} onChange={(e) => {
 								setBio(e.target.value)
-							}} className='h-11 outline-none border pl-2 rounded-lg' placeholder='Write about Yourself' />
+							}} className='h-11 outline-none border pl-2 rounded-lg bg-[#0C1615] placeholder:text-white placeholder:opacity-60' placeholder='Write about Yourself' />
 						</div>
 
 
@@ -188,7 +188,7 @@ const Profile = ({ session }: user) => {
 							<label htmlFor="user">Coding Languages/Skills</label>
 							<input type="text" value={skills} disabled={!isEditable} onChange={(e) => {
 								setSkills(e.target.value)
-							}} className='h-11 outline-none border pl-2 rounded-lg' placeholder='Javascript, React, Java, Spring Boot ....' />
+							}} className='h-11 outline-none border pl-2 rounded-lg bg-[#0C1615] placeholder:text-white placeholder:opacity-60' placeholder='Javascript, React, Java, Spring Boot ....' />
 						</div>
 
 

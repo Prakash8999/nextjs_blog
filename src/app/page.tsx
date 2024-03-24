@@ -10,7 +10,7 @@ const session = await getServerSession(authOptions)
 
   return (
     <>
-      <div className='px-5 pt-3 flex flex-col min-h-screen h-full bg-[#0C1615] items-center'>
+      <div className='px-5 pt-3 flex flex-col min-h-screen h-full bg-[#0C1615] items-center '>
 
         {/* <h1 className='text-4xl font-semibold'>Your feed</h1> */}
 

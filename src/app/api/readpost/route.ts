@@ -36,6 +36,7 @@ export async function GET() {
 				createdAt: true,
 				id: true,
 				draft: true,
+				Comment:true,
 				publish: true,
 				coverPhoto: true,
 				tags: true,

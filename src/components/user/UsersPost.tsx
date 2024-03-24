@@ -22,6 +22,9 @@ import Draft from './Draft'
 
 
 const UserPostDetails = ({ session }: any) => {
+
+
+
 	const { id } = useParams()
 	const pathname = usePathname();
 	const { replace } = useRouter();
@@ -37,8 +40,10 @@ const UserPostDetails = ({ session }: any) => {
 
 
 
+
 	const { data: userData, isError, isLoading } = useQuery({ queryKey: ['userpublicdata'], queryFn: fetchUserPublicData, staleTime: 0 })
 
+	console.log(userData);
 
 
 	const params = new URLSearchParams(query.toString())
@@ -113,18 +118,18 @@ const UserPostDetails = ({ session }: any) => {
 
 	return (
 		<>
-			<div className='bg-gray-100 w-full min-h-screen h-full flex  justify-start gap-x-10 pt-9 pl-12 '>
+			<div className=' w-full min-h-screen h-full flex  justify-start gap-x-10 pt-9 pl-12 '>
 
-				<div className='w-1/4 bg-white h-[80vh] flex flex-col items-center pt-3  rounded-lg shadow-lg'>
+				<div className='w-1/4 bg-[#182724] h-[80vh] flex flex-col items-center pt-3 border-2 border-[#03DAB5] shadow shadow-[#03DAB5] rounded-lg '>
 
 					<Image title={userData?.author?.username} src={userData?.author?.image} alt='User Image' width={100} height={100} className='object-cover rounded-full' referrerPolicy='no-referrer' />
 					<p className='text-2xl font-semibold text-center mt-3'>{userData?.author?.name}</p>
 
 					<p className='text-sm mt-3 text-center px-4'>
-						`&ldquo;${userData?.author?.bio}&rdquo;`
+						`&ldquo;${userData?.author?.bio ? userData?.author?.bio : "Bio" }&rdquo;`
 					</p>
 
-					<div className='mt-3 flex justify-between items-center gap-x-10'>
+					<div className='mt-3 flex justify-between items-center gap-x-10 '>
 
 						<a href={userData?.author?.github} target='_blank' className='flex items-center text-lg gap-x-2'>
 
@@ -138,18 +143,13 @@ const UserPostDetails = ({ session }: any) => {
 					</div>
 
 
-					<div className='mt-3 bg-gray-100 w-[80%] h-[25%] rounded-lg shadow-lg pt-3 flex flex-col gap-y-3'>
+					<div className='mt-3 bg-[#0C1615] w-[80%] h-[25%] rounded-lg shadow-lg pt-3 flex flex-col gap-y-3 '>
 						<div className='flex gap-x-2 text-sm items-center pl-4 '>
 							<RiArticleLine />
 							<p> Posts Published: {userData?.author?.Post?.length}</p>
 						</div>
 
 
-						<div className='flex gap-x-2 text-sm items-center pl-4 '>
-							<AiOutlineLike />
-
-							<p>Likes: {userData?.author?.Post?.length}</p>
-						</div>
 
 						<div className='flex gap-x-2 text-sm items-center pl-4 '>
 							<GrLocation />
@@ -191,7 +191,7 @@ const UserPostDetails = ({ session }: any) => {
 							<button onClick={() => {
 								postDetail('draft')
 							}}
-								className={`${getPostPublishedorDraft == 'draft' ? 'bg-blue-600 text-white' : 'bg-gray-300 text-black'}  border text-xl py-1.5 w-36 rounded-lg `}>
+								className={`${getPostPublishedorDraft == 'draft' ? 'bg-blue-600 border-2  text-white' : 'bg-gray-300 text-black'}  border text-xl py-1.5 w-36 rounded-lg `}>
 								Draft
 							</button>
 						</div> : null
@@ -201,15 +201,15 @@ const UserPostDetails = ({ session }: any) => {
 					{
 						getPostPublishedorDraft == 'draft' ? <Draft userId={session?.user?.id} /> : getPostPublishedorDraft == 'published' ? <div>
 							{
-								isLoading ? < Skeleton count={5} baseColor='white' height={100} className='mb-5 rounded-lg' /> :
+								isLoading ? < Skeleton count={5} baseColor='white' height={100} className='mb-5 rounded-lg ' /> :
 									userData?.author?.Post?.map((post: any, index: number) => {
-										return <div key={index} className={` relative bg-white flex  flex-col h-fit overflow-hidden   mb-4 p-4 rounded-xl shadow`}>
+										return <div key={index} className={` relative border-2 border-[#03DAB5] shadow shadow-[#03DAB5] bg-[#182724] flex  flex-col h-fit overflow-hidden   mb-4 p-4 rounded-xl `}>
 											<div className='flex gap-x-3 w-fit'>
 												<Image src={userData?.author?.image} alt='User Image' width={36} height={36} className='object-cover rounded-full' referrerPolicy='no-referrer' />
 												<div className='flex   -space-y-1 justify-between w-[45vw]'>
 													<div>
 
-														<p className='text-sm text-black font-semibold '> {userData.author?.username}
+														<p className='text-sm  font-semibold '> {userData.author?.username}
 
 
 														</p>
@@ -234,62 +234,70 @@ const UserPostDetails = ({ session }: any) => {
 
 											</div>
 
-											<div>
+											<div className=''>
 												{!post?.coverPhoto ?
-													<div className='mt-4'>
+													<div className='mt-4 '>
 
 														<Link className='' href={`/read/${post?.id}`}>
 															<h2 className='font-semibold text-xl '>{post?.title}</h2>
 
-														</Link>
 
 
-														<div className='flex justify-between pt-2 '>
-															<div className='flex   gap-x-10'>
+															<div className='flex justify-between pt-2 '>
+																<div className='flex   gap-x-10'>
 
-																<button >
-																	<AiOutlineLike className='text-2xl' />
-																</button>
+																	<button >
+																		<AiOutlineLike className='text-2xl' />
+
+																		{post?.likedIds?.length + 'dd'}
+																	</button>
 
 
-																<button>
-																	<FaRegComments className='text-2xl' />
+																	<button>
+																		<FaRegComments className='text-2xl' />
+																		{post?.Comment?.length}
+																	</button>
+																</div>
+
+
+																<button title='save'>
+																	<IoSaveOutline className='text-2xl' />
+																	0
 																</button>
 															</div>
-
-
-															<button title='save'>
-																<IoSaveOutline className='text-2xl' />
-															</button>
-														</div>
+														</Link>
 													</div>
 
-													: <div className='mt-4'>
+													: <div className='mt-4 '>
 
 														<Link className='' href={`/read/${post?.id}`}>
 
 															<Image alt='cover photo' src={post?.coverPhoto} width={1000} height={600} className=' h-[50vh] object-cover rounded-lg shadow-lg' priority />
 															<h2 className='font-semibold text-xl mt-2'>{post?.title}</h2>
-														</Link>
 
-														<div className='flex justify-between pt-2 '>
-															<div className='flex   gap-x-10'>
+															<div className='flex justify-between pt-2 '>
+																<div className='flex   gap-x-10'>
 
-																<button >
-																	<AiOutlineLike className='text-2xl' />
-																</button>
+																	<button >
+																		<AiOutlineLike className='text-2xl' />
+																		{post?.likedIds?.length}
+																	</button>
 
 
-																<button >
-																	<FaRegComments className='text-2xl' />
+																	<button >
+																		<FaRegComments className='text-2xl' />
+																		{post?.Comment?.length}
+																	</button>
+
+																</div>
+
+
+																<button title='save'>
+																	<IoSaveOutline className='text-2xl' />
+																	0
 																</button>
 															</div>
-
-
-															<button title='save'>
-																<IoSaveOutline className='text-2xl' />
-															</button>
-														</div>
+														</Link>
 													</div>}
 
 
@@ -307,13 +315,13 @@ const UserPostDetails = ({ session }: any) => {
 							{
 								isLoading ? < Skeleton count={5} baseColor='white' height={100} className='mb-5 rounded-lg' /> :
 									userData?.author?.Post?.map((post: any, index: number) => {
-										return <div key={index} className={` relative bg-white flex  flex-col h-fit overflow-hidden   mb-4 p-4 rounded-xl shadow`}>
+										return <div key={index} className={` relative bg-[#182724] flex  flex-col h-fit overflow-hidden   mb-4 p-4 rounded-xl shadow`}>
 											<div className='flex gap-x-3 w-fit'>
 												<Image src={userData?.author?.image} alt='User Image' width={36} height={36} className='object-cover rounded-full' referrerPolicy='no-referrer' />
 												<div className='flex   -space-y-1 justify-between w-[45vw]'>
 													<div>
 
-														<p className='text-sm text-black font-semibold '> {userData.author?.username}
+														<p className='text-sm  font-semibold '> {userData.author?.username}
 
 
 														</p>
@@ -345,27 +353,30 @@ const UserPostDetails = ({ session }: any) => {
 														<Link className='' href={`/read/${post?.id}`}>
 															<h2 className='font-semibold text-xl '>{post?.title}</h2>
 
-														</Link>
 
 
-														<div className='flex justify-between pt-2 '>
-															<div className='flex   gap-x-10'>
+															<div className='flex justify-between pt-2 '>
+																<div className='flex   gap-x-10'>
 
-																<button >
-																	<AiOutlineLike className='text-2xl' />
-																</button>
+																	<button >
+																		<AiOutlineLike className='text-2xl' />
+																		{post?.likedIds?.length + 'dd'}
+																	</button>
 
 
-																<button>
-																	<FaRegComments className='text-2xl' />
+																	<button>
+																		<FaRegComments className='text-2xl' />
+																		{post?.Comment?.length}
+																	</button>
+																</div>
+
+
+																<button title='save'>
+																	<IoSaveOutline className='text-2xl' />
+																	0
 																</button>
 															</div>
-
-
-															<button title='save'>
-																<IoSaveOutline className='text-2xl' />
-															</button>
-														</div>
+														</Link>
 													</div>
 
 													: <div className='mt-4'>
@@ -374,26 +385,29 @@ const UserPostDetails = ({ session }: any) => {
 
 															<Image alt='cover photo' src={post?.coverPhoto} width={1000} height={600} className=' h-[50vh] object-cover rounded-lg shadow-lg' priority />
 															<h2 className='font-semibold text-xl mt-2'>{post?.title}</h2>
-														</Link>
 
-														<div className='flex justify-between pt-2 '>
-															<div className='flex   gap-x-10'>
+															<div className='flex justify-between pt-2 '>
+																<div className='flex   gap-x-10'>
 
-																<button >
-																	<AiOutlineLike className='text-2xl' />
-																</button>
+																	<button >
+																		<AiOutlineLike className='text-2xl' />
+																		{post?.likedIds?.length}
+																	</button>
 
 
-																<button >
-																	<FaRegComments className='text-2xl' />
+																	<button >
+																		<FaRegComments className='text-2xl' />
+																		{post?.Comment?.length}
+																	</button>
+																</div>
+
+
+																<button title='save'>
+																	<IoSaveOutline className='text-2xl' />
+																	0
 																</button>
 															</div>
-
-
-															<button title='save'>
-																<IoSaveOutline className='text-2xl' />
-															</button>
-														</div>
+														</Link>
 													</div>}
 
 

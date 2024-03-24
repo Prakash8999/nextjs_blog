@@ -5,24 +5,42 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 	try {
 		const { id } = params
 
-		
+
 		const post = await prisma.post.findUnique({
 			where: {
-			
+
 				id: id
 			}
 			,
 			include: {
 				author: true,
+				Comment: {
+					orderBy: {
+						createdAt: 'desc',
+					},
+				},
+
 			}
+			,
+
 		})
+		// const authorId = await prisma.post.findUnique()
 
 		const postCount = await prisma.post.count({
-			where:{
-				id:id
+			where: {
+				authorId:post?.authorId
 			}
 		})
-		return NextResponse.json({ message: "Single post fetched successfully", post, postCount }, { status: 200 })
+		// const totalLikecount = await prisma.post.count
+		const followerCount = await prisma.user.count({
+			where: {
+				followingIds: {
+
+					has: post?.authorId
+				}
+			}
+		})
+		return NextResponse.json({ message: "Single post fetched successfully", post, followerCount, postCount }, { status: 200 })
 	} catch (error: any) {
 		return NextResponse.json({ message: error?.message }, { status: 400 })
 	}

@@ -7,7 +7,7 @@ const page =async () => {
 	const session = await getServerSession(authOptions)
   return (
 	<>
-	<div className='bg-gray-100 w-full min-h-screen h-full'>
+	<div className='bg-[#0C1615] text-white w-full min-h-screen h-full'>
 
 		
 	<Profile session={ session}/>

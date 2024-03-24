@@ -10,7 +10,10 @@ const page =async () => {
 	
   return (
 	<>
+	<div className='bg-[#0C1615] w-full min-h-screen h-full text-white'>
+
 	<UserPostDetails session ={session}/>
+	</div>
 	</>
   )
 }

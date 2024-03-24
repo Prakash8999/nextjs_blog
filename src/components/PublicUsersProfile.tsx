@@ -9,14 +9,14 @@ import { GrLocation } from 'react-icons/gr'
 import { RiArticleLine, RiUserFollowLine } from 'react-icons/ri'
 import { Toaster, toast } from 'sonner'
 
-const PublicUsersProfile = ({ userData, className, session }: { userData: any, className: any, session: any }) => {
+const PublicUsersProfile = ({ userData, className, session, fetchData, followerCount, postCount }: { userData: any, className: string, session: any, fetchData: any, followerCount: number , postCount:number}) => {
 	const [loading, setLoading] = useState(false)
 	const isFollowing = useMemo(() => {
 		const list = session?.user.followingIds || [];
 
 		return list.includes(userData?.author?.id);
 	}, [userData?.author?.id, session?.user.followingIds]);
-	 //false
+	//false
 
 
 	const router = useRouter()
@@ -42,6 +42,7 @@ const PublicUsersProfile = ({ userData, className, session }: { userData: any, c
 					}).then((res) => {
 						console.log(res);
 						setLoading(false)
+						fetchData
 					})
 						.catch((err) => {
 							console.log(err);
@@ -57,6 +58,7 @@ const PublicUsersProfile = ({ userData, className, session }: { userData: any, c
 						}
 					}).then((res) => {
 						setLoading(false)
+						fetchData()
 						console.log(res);
 					})
 
@@ -69,16 +71,17 @@ const PublicUsersProfile = ({ userData, className, session }: { userData: any, c
 			}
 		}
 	}
+	console.log(userData);
 
 	return (
 		<>
-			<div className={`${className} bg-[#182724] border-2 border-[#03DAB5] text-white h-[80vh] flex flex-col items-center pt-3  rounded-lg shadow-lg`}>
+			<div className={`${className} bg-[#182724] border-2 border-[#03DAB5] text-white min-h-[60vh] h-fit flex flex-col items-center pt-3  rounded-lg shadow-lg`}>
 
 				<Image title={userData?.author?.username} src={userData?.author?.image} alt='User Image' width={100} height={100} className='object-cover rounded-full' referrerPolicy='no-referrer' />
 				<p className='text-2xl font-semibold text-center mt-3'>{userData?.author?.name}</p>
 
 				<p className='text-sm mt-3 text-center px-4'>
-					`&ldquo;${userData?.author?.bio}&rdquo;`
+					`&ldquo;{userData?.author?.bio ? userData?.author?.bio : 'Bio'}&rdquo;`
 				</p>
 
 				<div className='mt-3 flex justify-between items-center gap-x-10'>
@@ -95,18 +98,14 @@ const PublicUsersProfile = ({ userData, className, session }: { userData: any, c
 				</div>
 
 
-				<div className='mt-3 bg-[#0C1615] w-[80%] h-[25%] rounded-lg shadow-lg pt-3 flex flex-col gap-y-3'>
+				<div className='mt-3 bg-[#0C1615] w-[80%] h-[25%] rounded-lg shadow-lg py-3 flex flex-col gap-y-3'>
 					<div className='flex gap-x-2 text-sm items-center pl-4 '>
 						<RiArticleLine />
-						<p> Posts Published: {userData?.author?.Post?.length}</p>
+						<p> Posts Published: {postCount}</p>
 					</div>
 
 
-					<div className='flex gap-x-2 text-sm items-center pl-4 '>
-						<AiOutlineLike />
-
-						<p>Likes: {userData?.author?.Post?.length}</p>
-					</div>
+					
 
 					<div className='flex gap-x-2 text-sm items-center pl-4 '>
 						<GrLocation />
@@ -116,16 +115,16 @@ const PublicUsersProfile = ({ userData, className, session }: { userData: any, c
 					<div className='flex gap-x-2 text-sm items-center pl-4 '>
 						<RiUserFollowLine />
 
-						<p>Followers: {userData?.author?.Post?.length}</p>
+						<p>Followers: {followerCount}</p>
 					</div>
 
 				</div>
 
 				<div className='mt-6'>
 
-					<button 
-					disabled={loading}
-					onClick={handleFollow} className={`${isFollowing ? 'bg-gray-400 opacity-50' : 'bg-blue-600 '} px-4 py-2 text-white rounded-md text-xl`}>
+					<button
+						disabled={loading}
+						onClick={handleFollow} className={`${isFollowing ? 'bg-gray-400 opacity-50' : 'bg-blue-600 '} px-4 py-2 text-white rounded-md text-xl`}>
 						{
 							session?.user.id == userData?.author?.id ? 'Edit' : isFollowing ? 'Unfollow' : 'Follow'
 						}
