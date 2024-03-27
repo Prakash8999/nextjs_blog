@@ -14,7 +14,6 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 		const followerCount = await prisma.user.count({
 			where: {
 				followingIds: {
-
 					has: userId?.id
 				}
 			}

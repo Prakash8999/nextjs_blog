@@ -185,10 +185,10 @@ const Profile = ({ session }: user) => {
 
 						<div className='flex flex-col gap-y-2'>
 
-							<label htmlFor="user">Coding Languages/Skills</label>
+							<label htmlFor="user">Skills</label>
 							<input type="text" value={skills} disabled={!isEditable} onChange={(e) => {
 								setSkills(e.target.value)
-							}} className='h-11 outline-none border pl-2 rounded-lg bg-[#0C1615] placeholder:text-white placeholder:opacity-60' placeholder='Javascript, React, Java, Spring Boot ....' />
+							}} className='h-11 outline-none border pl-2 rounded-lg bg-[#0C1615] placeholder:text-white placeholder:opacity-60' placeholder='Programming, Editing..' />
 						</div>
 
 

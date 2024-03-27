@@ -226,7 +226,7 @@ const ReadPost = ({ className, session }: cn) => {
 
 												{
 													// @ts-ignore
-													dayjs(post?.createdAt).format('DD/MM/YY')
+													dayjs(post?.createdAt).format('D/MM/YY h:mm A')
 												}
 											</p>
 										</div>

@@ -10,9 +10,11 @@ import PublicUsersProfile from '@/components/PublicUsersProfile'
 import * as dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { useRouter } from 'next/navigation'
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import { Toaster, toast } from 'sonner'
 import { BiLike, BiSolidLike } from "react-icons/bi";
 import { FaRegComments } from "react-icons/fa";
+import Spinner from './Loading'
 dayjs.extend(relativeTime);
 
 interface PostData {
@@ -44,15 +46,17 @@ const ReadSinglePost = ({ session }: any) => {
 			behavior: 'smooth'
 		});
 	};
+	const [loading, setLoading] = useState(true)
 
 	const fetchData = async () => {
-
 
 		await axios(`/api/readpost/${id}`, {
 			method: "GET"
 		}).then((res) => {
 			// console.log(res.data);
+			setLoading(false)
 			setData(res?.data || {})
+
 		}).catch((err) => {
 			console.log(err);
 
@@ -61,7 +65,7 @@ const ReadSinglePost = ({ session }: any) => {
 
 	useEffect(() => {
 		fetchData()
-
+		// setLoading(false)
 
 	}, [])
 
@@ -166,16 +170,37 @@ const ReadSinglePost = ({ session }: any) => {
 
 				<PublicUsersProfile userData={data?.post} fetchData={fetchData} followerCount={data?.followerCount || 0} postCount={data?.postCount || 0} className={"w-[25vw] "} session={session} />
 			</div>
+			<SkeletonTheme />
+
+
 
 
 			<div className='  h-full'>
 
 				<div className='w-[55vw] bg-[#182724] min-h-screen text-white border-2 border-[#03DAB5] shadow shadow-[#03DAB5]   rounded-lg '>
 
+
+					{
+						loading ? <div className=' flex flex-col items-center justify-center text-xl mt-28'>
+
+							{/* < Skeleton baseColor="#0C1615" highlightColor="#182724" style={{ borderRadius: 10 }} height={700} width={700} />
+							 */}
+							<Spinner className='h-20 w-20' />
+						</div>
+							:
+							''
+					}
+
+
+
+
+
 					{
 						data?.post?.coverPhoto ? <div>
 
 							<Image alt='cover photo' src={data?.post?.coverPhoto} width={1000} height={900} className=' h-[50vh] object-cover rounded-t-lg  shadow-lg' priority />
+
+
 
 						</div> : ''
 					}
@@ -213,15 +238,13 @@ const ReadSinglePost = ({ session }: any) => {
 											<p>
 												{
 													// @ts-ignore
-													dayjs(data?.post?.createdAt).toNow()
+													loading ? '' : dayjs(data?.post?.createdAt).format('D/MM/YY h:mm A')
 
 													// dayjs().to(dayjs(data?.post?.createdAt)) // "31 years ago"
 												}
 											</p>
 
-											<p>
-												Ago
-											</p>
+
 										</div>
 									</div>
 
@@ -316,7 +339,7 @@ const ReadSinglePost = ({ session }: any) => {
 					</div>
 				</div>
 			</div>
-			<Toaster richColors position='top-center'/>
+			<Toaster richColors position='top-center' />
 
 		</>
 	)

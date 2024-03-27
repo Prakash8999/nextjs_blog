@@ -2,7 +2,7 @@
 import axios from 'axios'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { AiOutlineLike } from 'react-icons/ai'
 import { BsGithub, BsLinkedin } from 'react-icons/bs'
 import { GrLocation } from 'react-icons/gr'
@@ -10,20 +10,33 @@ import { RiArticleLine, RiUserFollowLine } from 'react-icons/ri'
 import { Toaster, toast } from 'sonner'
 
 const PublicUsersProfile = ({ userData, className, session, fetchData, followerCount, postCount }: { userData: any, className: string, session: any, fetchData: any, followerCount: number, postCount: number }) => {
+	const [callf, setCallF] = useState(false)
 	const [loading, setLoading] = useState(false)
-	const[checkIsFollowing, setCheckIsFollowing] = useState(false)
+	
 	const isFollowing = useMemo(() => {
 		const list = session?.user.followingIds || [];
-
+		console.log('calling');
+		console.log(userData)
 		return list.includes(userData?.author?.id);
-	}, [userData?.author?.id, session?.user.followingIds]);
+	}, [userData?.author?.id, session?.user.followingIds, followerCount]);
+	console.log(isFollowing);
+
+
+	// useEffect(() => {
+	// 	isFollowing
+	// }, [ followerCount])
+
+
 	//false
+	const [checkIsFollowing, setCheckIsFollowing] = useState(isFollowing)
 
 
 	const router = useRouter()
 	const handleFollow = () => {
+
+
 		if (!session) {
-			toast.warning("Please Login First")
+			toast.error("Please Login First")
 		}
 
 
@@ -43,8 +56,10 @@ const PublicUsersProfile = ({ userData, className, session, fetchData, followerC
 					}).then((res) => {
 						console.log(res);
 						setLoading(false)
+						fetchData()
 
-						
+
+
 					})
 						.catch((err) => {
 							console.log(err);
@@ -61,7 +76,8 @@ const PublicUsersProfile = ({ userData, className, session, fetchData, followerC
 					}).then((res) => {
 						setLoading(false)
 						fetchData()
-					
+
+						setCallF(true)
 						console.log(res);
 					})
 
@@ -140,7 +156,7 @@ const PublicUsersProfile = ({ userData, className, session, fetchData, followerC
 				</div>
 
 			</div>
-			<Toaster richColors position='top-center'/>
+			<Toaster richColors position='top-center' />
 
 
 		</>

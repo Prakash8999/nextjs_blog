@@ -11,11 +11,11 @@ export async function GET() {
 	try {
 
 
-		const cachedValue = await redisClient.get("post")
-		if (cachedValue) {
-			const parsedCachedValue = JSON.parse(cachedValue);
-			return NextResponse.json({ message: "Post Fetch successfully", post: parsedCachedValue }, { status: 200 })
-		}
+		// const cachedValue = await redisClient.get("post")
+		// if (cachedValue) {
+		// 	const parsedCachedValue = JSON.parse(cachedValue);
+		// 	return NextResponse.json({ message: "Post Fetch successfully", post: parsedCachedValue }, { status: 200 })
+		// }
 
 		const limit = '3';
 
@@ -52,8 +52,8 @@ export async function GET() {
 		})
 
 
-		await redisClient.set("post", JSON.stringify(post))
-		await redisClient.expire("post", 30)
+		// await redisClient.set("post", JSON.stringify(post))
+		// await redisClient.expire("post", 30)
 
 
 		return NextResponse.json({ message: "Post Fetch successfully", post }, { status: 200 })
